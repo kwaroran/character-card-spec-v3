@@ -192,3 +192,16 @@ this would be helpful for botmaker making something known as "persona" embeded i
 This decorator makes lorebook entry not activate in any case.
 
 this would be helpful for fallbacks, or just making lorebook entry as a note.
+
+### @@activate
+
+This decorator makes lorebook entry activate in any case.
+
+this would be helpful for fallbacks.
+
+
+### @@disable_ui_prompt
+
+This decorator is used for disabling application set `system_prompt` or `post_history_instructions`
+
+This is for no-loss conversion from CCv2 to CCv3 and vice versa.

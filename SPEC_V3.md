@@ -762,18 +762,30 @@ This section is just a recommendation. applications *MAY* convert the fields in 
 ### `system_prompt`
 
 This field *SHOULD* be set by this algorithm:
-1. find the lorebook entry from `character_book` field with `@@role system` and `@@position after_desc` and `@@disable_ui_prompt system_prompt` decorators, and without other decorators.
-2. if the lorebook entry is not found, the value of this field *SHOULD* be an empty string.
+1. find the lorebook entry from `character_book` field with `@@role system` and `@@depth 0` and `@@disable_ui_prompt system_prompt` decorators, and without other decorators.
+2. if the lorebook entry is not found, go to a1.
 3. if the lorebook entry is found, the value of this field *SHOULD* be the content field of the lorebook entry, with the decorators removed.
-4. if there are multiple lorebook entries that matches the conditions, the application *SHOULD* concatenate the content fields of the lorebook entries, with a newline between them.
+4. add `{{original}}` to the content field.
+5. if there are multiple lorebook entries that matches the conditions, the application *SHOULD* use the first lorebook entry that matches the conditions.
+
+A1. if the lorebook entry is not found, find the lorebook entry from `character_book` field with `@@role system` and `@@depth 0` decorators, and without other decorators.
+A2. if the lorebook entry is not found, the value of this field *SHOULD* be an empty string.
+A3. if the lorebook entry is found, the value of this field *SHOULD* be the content field of the lorebook entry, with the decorators removed.
+A4. if there are multiple lorebook entries that matches the conditions, the application *SHOULD* use the first lorebook entry that matches the conditions.
 
 ### `post_history_instructions`
 
 This field *SHOULD* be set by this algorithm:
 1. find the lorebook entry from `character_book` field with `@@role system` and `@@depth 0` and `@@disable_ui_prompt post_history_instructions` decorators, and without other decorators.
-2. if the lorebook entry is not found, the value of this field *SHOULD* be an empty string.
+2. if the lorebook entry is not found, go to a1.
 3. if the lorebook entry is found, the value of this field *SHOULD* be the content field of the lorebook entry, with the decorators removed.
-4. if there are multiple lorebook entries that matches the conditions, the application *SHOULD* concatenate the content fields of the lorebook entries, with a newline between them.
+4. add `{{original}}` to the content field.
+5. if there are multiple lorebook entries that matches the conditions, the application *SHOULD* use the first lorebook entry that matches the conditions.
+
+A1. if the lorebook entry is not found, find the lorebook entry from `character_book` field with `@@role system` and `@@depth 0` decorators, and without other decorators.
+A2. if the lorebook entry is not found, the value of this field *SHOULD* be an empty string.
+A3. if the lorebook entry is found, the value of this field *SHOULD* be the content field of the lorebook entry, with the decorators removed.
+A4. if there are multiple lorebook entries that matches the conditions, the application *SHOULD* use the first lorebook entry that matches the conditions.
 
 ### `personality`
 
