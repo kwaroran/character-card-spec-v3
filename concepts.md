@@ -1,5 +1,7 @@
 > in this document, we don't describe how it should be implemented. For that, you should check the [SPEC_V3.md](SPEC_V3.md) document. **This file SHOULD NOT be used as a only reference for implementing CCv3.**
 
+> CCv3 is still in development, and it is not stable yet. This document is a draft and it is subject to change. and  this document may not be up to date with the latest changes in the CCv3 specification.
+
 # Concepts of CCv3
 
 Character Card V3 specification is for standarlizing and expending advanced features of character cards. It is designed to be used in various platforms and applications. It is based on the [CCv2](https://github.com/malfoyslastname/character-card-spec-v2/blob/main/spec_v2.md) specification and extends it with new features.
