@@ -167,7 +167,7 @@ The field *SHOULD NOT* be editable by the user. If the `source` is a URI, the ap
 
 applications *SHOULD* only append elements to the `source` field and *SHOULD NOT* remove or modify the elements in the `source` field if the element isn't added by application. elements appended by application *MAY* be editable by the application.
 
-However, if the array size is bigger than 100, it *MAY* be trimmed by the application for performance reasons.
+However, if it significantly slows down the application, or it makes the application hard to use, or the source is harmful, the application *MAY* remove the elements in the `source` field. if the application removes the elements in the `source` field, the application *SHOULD* alert the user that the source is removed.
 
 ### `assets`
 
