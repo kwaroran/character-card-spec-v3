@@ -541,9 +541,7 @@ This decorator's value *MUST* be a string and it does not have multiple values. 
 
 ### `@@dont_activate`
 
-This decorator does not have a value. if this decorator is present, the lorebook field *SHOULD NOT* be considered as a match *IN ANY CASE*.
-
-if `@@activate` decorator is present, the application *SHOULD* ignore this decorator.
+This decorator does not have a value. if this decorator is present, the lorebook field *SHOULD NOT* be considered as a match *IN ANY CASE* if `@@activate` decorator is not present. if `@@activate` decorator is present, this decorator *SHOULD* be ignored.
 
 ### `@@activate`
 
