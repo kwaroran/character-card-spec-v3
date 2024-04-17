@@ -113,19 +113,19 @@ This field is a boolean that makes lorebook entry use regex to match the key val
 
 ## Decorators
 
-### @@activate_after N
+### @@activate_only_after N
 
 This decorator makes lorebook entry only active after a N turns of the conversation.
 
-### @@activate_every N
+### @@activate_only_every N
 
-This decorator makes lorebook entry active every N turns of the conversation.
+This decorator makes lorebook entry only active every N turns of the conversation.
 
-### @@keep_active_after_match
+### @@keep_activate_after_match
 
 This decorator makes lorebook entry active after a match, and keeps active until the conversation ends.
 
-### @@keep_inactive_after_match
+### @@dont_activate_after_match
 
 This decorator makes lorebook entry inactive after a match, and keeps inactive until the conversation ends.
 
