@@ -53,7 +53,7 @@ How {type} is determined *SHOULD* be where the asset is used. If the asset is us
 
 Application specific data can be stored as a JSON file in root of the zip file. frontends *MAY* use this file to store the data that is not related to the CharacterCardV3 object.
 
-Zip file *MAY* be encrypted. if the zip file is encrypted, the application *MAY* provide a way to decrypt the file. the password *MUST NOT* be stored in the CHARX file.
+Zip file *SHOULD NOT* be encrypted.
 
 Application's *MAY* reject the CHARX file if the file is too large, or the file is corrupted, or the file is not a valid zip file, or the file is encrypted and the application does not support decryption, or the file is encrypted and the password is incorrect or something else that the application does not support.
 
