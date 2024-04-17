@@ -625,9 +625,11 @@ All new lorebooks made while migrating the values *SHOULD* be in the:
 
 This field is from TavernCardV2 Object in Character Card V2.
 
-This field *SHOULD* be migrated to `character_book` field as a new lorebook entry, with decorator `@@role system` and `@@position after_desc` and `@@disable_ui_prompt system_prompt` decorators appended at front of the content field, while trimming `{{original}}` from the content field.
+This field *SHOULD* be migrated to `character_book` field as a new lorebook entry, with decorator `@@role system` and `@@position after_desc` decorators appended at front of the content field.
 
-example of migrating the `system_prompt` field:
+If `{{original}}` exists in the content field, it must also add `@@disable_ui_prompt system_prompt` decorator at the front of the content field, and trim `{{original}}` from the content field.
+
+example of migrating the `system_prompt` field without `{{original}}`:
 ```ts
 {
   keys: [],
@@ -644,9 +646,11 @@ example of migrating the `system_prompt` field:
 
 This field is from TavernCardV2 Object in Character Card V2.
 
-This field *SHOULD* be migrated to `character_book` field as a new lorebook entry, with decorator `@@role system` and `@@depth 0` and `@@disable_ui_prompt post_history_instructions` decorators appended at front of the content field, while trimming `{{original}}` from the content field.
+This field *SHOULD* be migrated to `character_book` field as a new lorebook entry, with decorator `@@role system` decorators appended at front of the content field.
 
-example of migrating the `post_history_instructions` field:
+If `{{original}}` exists in the content field, it must also add `@@disable_ui_prompt post_history_instructions` decorator at the front of the content field, and trim `{{original}}` from the content field.
+
+example of migrating the `post_history_instructions` field  without `{{original}}`:
 ```ts
 {
   keys: [],
