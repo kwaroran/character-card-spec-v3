@@ -1,0 +1,192 @@
+> in this document, we don't describe how it should be implemented. For that, you should check the [SPEC_V3.md](SPEC_V3.md) document. **This file SHOULD NOT be used as a only reference for implementing CCv3.**
+
+# Concepts of CCv3
+
+Character Card V3 specification is for standarlizing and expending advanced features of character cards. It is designed to be used in various platforms and applications. It is based on the [CCv2](https://github.com/malfoyslastname/character-card-spec-v2/blob/main/spec_v2.md) specification and extends it with new features.
+
+# New Features
+
+This is a list of new features that are added to the CCv3 specification. 
+
+## New Embedding Methods
+
+Old embeding method, JSON and PNG, is still supported in the CCv3 specification.
+
+However, PNG embedding method is changed a bit. it would now store in `ccv3` chunk, instead of `chara` chunk, and it would not use base64 encoding, just raw data, with escaped unicode characters.
+
+XCHAR embeding method is added to the specification. XCHAR is a new format just for storing character cards. It is a archive format that contains assets and metadata of the character card. It is designed to be used in applications that needs to store external assets and metadata in a single file to share or store.
+
+method that allows embed external assets and metadata in PNG files also added to the specification, but this method is not recommended to use in new applications, just for legacy support, and it is not required to implement. use XCHAR instead for new applications.
+
+## New Fields
+
+### license
+
+License field is added to the specification to store the license of the character card. It is a string field that contains the license of the character card. this field could be used to store license information and easily access it.
+
+### assets
+
+Assets field is added to the specification to store the assets of the character card. This contains icon, background, user icon, emotion and inlay assets of the character card.
+
+This allows botmakers to make characters with alternative icons, embeded backgrounds, embeded emotions (also known as expressions), and something like embeded persona, without worrying compatibility issues.
+
+However, this field's features is not required to implement, and it is up to the application to support it.
+
+### greetings
+
+Greetings field is a replacement for `first_mes` and `alternate_greetings` fields in the CCv2 specification.
+
+Unlike the `first_mes` and `alternate_greetings` fields, greetings field able to specify greeting messages for only group chats or only 1-1 chats.
+
+`first_mes` and `alternate_greetings` fields are deprecated in the CCv3 specification.
+
+### nickname
+
+Nickname field is added to the specification to use alternative name in `{{char}}`, instead of the name field.
+
+### creator_notes_multilingual
+
+Creator notes multilingual field is added to the specification to store creator notes in multiple languages, which would allow botmakers to store creator notes in multiple languages.
+
+### source
+
+Source field is added to the specification to store the source of the character card. this would be helpful for applications to locate where the character card is from.
+
+## creation_date
+
+Creation date field is added to the specification to store the creation date of the character card. this would be helpful for applications to locate when the character card is created.
+
+## modification_date
+
+Modification date field is added to the specification to store the modification date of the character card. this would be helpful for applications to locate when the character card is modified.
+
+## Lorebook & Decorators
+
+The main and biggest change in the CCv3 specification is the lorebook change. The lorebook can use `@@decorator` syntax to put advanced features, like positioning, activate after a N turn, and more, to make the lorebook as a powerful, unified field to insert prompts.
+
+Decorators are made for core users to make advanced prompts, without needing to make a new field for, it which makes newcomers confused.
+
+```
+@@depth 5
+@@ignore_on_max_context
+
+Prompt text here
+```
+
+This is a example of a prompt with decorators. we can see that the prompt would be positioned at depth of 5, and it will ignore the prompt if the context is at max.
+
+applications are allowed to implement their own decorators too, so something like `@@activate_after_emotion` could be implemented can be implemented by the application.
+
+botmakers can make fallbacks for the decorators which has one more `@`. So if the application does not support the decorator, it will fallback to the default behavior.
+
+```
+@@activate_after_emotion
+@@@instruct_depth 100
+@@@depth 5
+
+Prompt text here
+```
+
+This is a example of a prompt with a fallback decorator. if the application does not support `@@activate_after_emotion`, it will fallback to the default behavior, which is `@@instruct_depth 5`. and if the application does not support `@@instruct_depth` (like not a instruct model), it will fallback to `@@depth 5`.
+
+This makes other fields like `system_prompt` and `post_history_instructions` deprecated, since they can be implemented in the lorebook, with same behavior with more features.
+
+However, `description` field still exists, since it is used to make simple character cards, and it is used more then inserting as prompts nowadays.
+
+Also, lorebook export format and field's behavior is standardized in the specification, unlike the CCv2 specification which does not have a standardized lorebook export format and field's behavior.
+
+
+## New Fields in Lorebook
+
+### constant
+
+This field is a boolean that makes lorebook entry always active regardless of the key values.
+
+Technically, this field exists in the CCv2 specification, but it was a optional field to implement, in CCv3, it is a required field to implement.
+
+
+### use_regex
+
+This field is a boolean that makes lorebook entry use regex to match the key values so botmakers can use regex to match more complex key values.
+
+## Decorators
+
+### @@activate_after N
+
+This decorator makes lorebook entry only active after a N turns of the conversation.
+
+### @@activate_every N
+
+This decorator makes lorebook entry active every N turns of the conversation.
+
+### @@keep_active_after_match
+
+This decorator makes lorebook entry active after a match, and keeps active until the conversation ends.
+
+### @@keep_inactive_after_match
+
+This decorator makes lorebook entry inactive after a match, and keeps inactive until the conversation ends.
+
+### @@depth N
+
+This decorator makes lorebook entry positioned at a specific depth, like unstandardized `depth_prompt` field.
+
+### @@instruct_depth
+
+Same as `@@depth`, but for instruct models.
+
+### @@reverse_depth
+
+Same as `@@depth`, but for counting from the top.
+
+### @@reverse_instruct_depth
+
+Same as `@@reverse_depth`, but for instruct models.
+
+### @@role
+
+This decorator gives a role to the lorebook entry like "user" or "assistant".
+
+### @@scan_depth N
+
+This decorator modify the scan depth for only this lorebook entry.
+
+### @@instruct_scan_depth N
+
+Same as `@@scan_depth`, but for instruct models.
+
+### @@is_greeting N
+
+This decorator makes lorebook entry only active only for specific greeting.
+
+### @@position
+
+This decorator makes lorebook entry positioned at a specific position, like position field in the CCv2 specification, but with more positioning options.
+
+Old position field is deprecated in CCv3.
+
+### @@ignore_on_max_context
+
+This decorator makes lorebook entry ignore if the context reaches max context.
+
+### @@additional_keys N,N...
+
+This decorator makes lorebook entry active only if the additional keys are matched too like `secondary_keys` field in the CCv2 specification.
+
+Old `secondary_keys` field, and `selective` field is deprecated in CCv3.
+
+### @@exclude_keys N,N...
+
+unlike `@@additional_keys`, this decorator makes lorebook entry inactive if the exclude keys are matched.
+
+### @@is_user_icon N
+
+This decorator makes lorebook entry active only for specific user icon, which are embeded in the character card.
+
+this would be helpful for botmaker making something known as "persona" embeded in the character card.
+
+### @@dont_activate
+
+This decorator makes lorebook entry not activate in any case.
+
+this would be helpful for fallbacks, or just making lorebook entry as a note.
