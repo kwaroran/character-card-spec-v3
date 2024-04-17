@@ -594,9 +594,7 @@ This CBS works same as `{{user}}` CBS.
 
 ## Migrating Fields from Character Card V2
 
-These fields are removed from Character Card V2. applications *MUST NOT* use these fields in Character Card V3. This section desribes how the fields should be migrated to Character Card V3.
-
-This section is just a recommendation. applications *MAY* migrate the fields in their own way.
+This section desribes how removed fields should be migrated to Character Card V3. This section is just a recommendation. applications *MAY* migrate the fields in their own way.
 
 All new lorebooks made while migrating the values *SHOULD* be in the:
 ```ts
