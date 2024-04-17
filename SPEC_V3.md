@@ -743,7 +743,7 @@ for example, if the `depth_prompt` field is `{depth: 2, role: "assistant", conte
 
 ## Converting Character Card V3 to Character Card V2
 
-Sometimes, applications may need to convert Character Card V3 to Character Card V2, for backward compatibility. This section describes how the fields should be converted to Character Card V2. however, application *SHOULD NOT* export Character Card V3 to Character Card V2 if it's not necessary, and user not requests it, as some fields may be lost in the conversion.
+Sometimes, applications may need to convert Character Card V3 to Character Card V2, for backward compatibility. This section describes how the fields should be converted to Character Card V2. however, application *SHOULD NOT* convert Character Card V3 to only Character Card V2, unless it is necessary or user requested, as new fields are not present in Character Card V2.
 
 This section is just a recommendation. applications *MAY* convert the fields in their own way.
 
