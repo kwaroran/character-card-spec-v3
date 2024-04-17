@@ -390,10 +390,12 @@ If there is multiple decorators with same name, the application *SHOULD* only co
 Decorators are used like this:
 
 ```
-@@decorator_name value
-@@another_decorator_name value
-@@decorator_without_value
+@@decorator_with_string_value value
+@@another_decorator_with_string_value value
+@@decorator_with_number_value 4
+@@decorator_with_boolean_value true
 @@decorator_with_multiple_values value1,value2,value3
+@@decorator_without_value
 
 Some lorebook content
 ```
