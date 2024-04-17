@@ -743,7 +743,72 @@ for example, if the `depth_prompt` field is `{depth: 2, role: "assistant", conte
 
 ## Converting Character Card V3 to Character Card V2
 
-Sometimes, applications may need to convert Character Card V3 to Character Card V2. This section describes how the fields should be converted to Character Card V2.
+Sometimes, applications may need to convert Character Card V3 to Character Card V2, for backward compatibility. This section describes how the fields should be converted to Character Card V2. however, application *SHOULD NOT* export Character Card V3 to Character Card V2 if it's not necessary, and user not requests it, as some fields may be lost in the conversion.
 
+This section is just a recommendation. applications *MAY* convert the fields in their own way.
+
+### `system_prompt`
+
+This field *SHOULD* be set by this algorithm:
+1. find the lorebook entry from `character_book` field with `@@role system` and `@@position after_desc` decorators, and without other decorators.
+2. if the lorebook entry is not found, the value of this field *SHOULD* be an empty string.
+3. if the lorebook entry is found, the value of this field *SHOULD* be the content field of the lorebook entry, with the decorators removed.
+4. if there are multiple lorebook entries that matches the conditions, the application *SHOULD* concatenate the content fields of the lorebook entries, with a newline between them.
+
+### `post_history_instructions`
+
+This field *SHOULD* be set by this algorithm:
+1. find the lorebook entry from `character_book` field with `@@role system` and `@@depth 0` decorators, and without other decorators.
+2. if the lorebook entry is not found, the value of this field *SHOULD* be an empty string.
+3. if the lorebook entry is found, the value of this field *SHOULD* be the content field of the lorebook entry, with the decorators removed.
+4. if there are multiple lorebook entries that matches the conditions, the application *SHOULD* concatenate the content fields of the lorebook entries, with a newline between them.
+
+### `personality`
+
+This field *SHOULD* be set by this algorithm:
+1. find the lorebook entry from `character_book` field with `@@position personality` decorator, and without other decorators.
+2. if the lorebook entry is not found, the value of this field *SHOULD* be an empty string.
+3. if the lorebook entry is found, the value of this field *SHOULD* be the content field of the lorebook entry, with the decorators removed.
+4. if there are multiple lorebook entries that matches the conditions, the application *SHOULD* concatenate the content fields of the lorebook entries, with a newline between them.
+
+### `scenario`
+
+This field *SHOULD* be set by this algorithm:
+1. find the lorebook entry entry from `character_book` field `@@position scenario` decorator, and without other decorators.
+2. if the lorebook entry is not found, the value of this field *SHOULD* be an empty string.
+3. if the lorebook entry is found, the value of this field *SHOULD* be the content field of the lorebook entry, with the decorators removed.
+4. if there are multiple lorebook entries that matches the conditions, the application *SHOULD* concatenate the content fields of the lorebook entries, with a newline between them.
+
+### `first_mes`
+
+This field *SHOULD* be set by this algorithm:
+1. find get the first element of the `greetings` field, `type` field does not matter.
+2. if the element is not found, the value of this field *SHOULD* be an empty string.
+3. if the element is found, the value of this field *SHOULD* be the `message` field of the element.
+
+### `alternate_greetings`
+
+This field *SHOULD* be set by this algorithm:
+1. get all elements of the `greetings` field, except the first element.
+2. if there are no elements that matches the conditions, the value of this field *SHOULD* be an empty array.
+3. if there are elements that matches the conditions, the value of this field *SHOULD* be an array with the `message` field of the elements.
+
+### `depth_prompt`
+
+This field *SHOULD* be set by this algorithm:
+
+1. find the lorebook entry from `character_book` field with `@@depth` decorator and optionally `@@role` decorator, without other decorators.
+2. if the lorebook entry is not found, the value of this field *SHOULD* be an empty object.
+3. if the lorebook entry is found, the value of this field *SHOULD* be an object with `depth` field as the value of the `@@depth` decorator, `role` field as the value of the `@@role` decorator, and `content` field as the content field of the lorebook entry, with the decorators removed.
+    - if `@@role` decorator is not present, the value of the `role` field *SHOULD* be null/undefined.
+4. if there are multiple lorebook entries that matches the conditions, the application *SHOULD* use the first lorebook entry that matches the conditions.
+
+### `character_book` entries
+
+This field *SHOULD* be converted to Character Card V2 as follows:
+
+1. exclude the lorebook entries that are converted to `system_prompt`, `post_history_instructions`, `personality`, `scenario`, `first_mes`, `alternate_greetings`, `depth_prompt` fields.
+2. if the lorebook entry has `@@additional_keys` decorator, the `secondary_keys` field *SHOULD* be set as the values of the decorator, separated by a comma, and `selective` field *SHOULD* be set as true. if `@@additional_keys` decorator is not present, the `secondary_keys` field *SHOULD* be set as an empty array, and `selective` field *SHOULD* be set as false.
+3. remove all decorators from the content field.
 
 <!-- Draft by @kwaroran -->
