@@ -547,6 +547,18 @@ This decorator does not have a value. if this decorator is present, the lorebook
 
 This decorator does not have a value. if this decorator is present, the lorebook field *SHOULD* be considered as a match *IN ANY CASE*.
 
+### `@@disable_ui_prompt`
+
+This decorator's value *MUST* be a string. if this decorator is present, the application *MAY* disable the UI prompt which type is equal to the value of this decorator.
+
+types or the UI prompts are:
+- `post_history_instructions`
+- `system_prompt`
+
+This *MUST* not taken to mean that the application should support these UI prompt types. if the application does not support the UI prompts, the application *SHOULD* ignore this decorator.
+
+applications *MAY* add more types of UI prompts. if the value is not recognized by the application, the application *SHOULD* ignore this decorator.
+
 ## Curly Braced Syntaxes
 
 Curly braced syntaxes, shortly CBS, also known as macros, are used to replace the values in the prompt to specific values.
@@ -611,7 +623,7 @@ All new lorebooks made while migrating the values *SHOULD* be in the:
 
 This field is from TavernCardV2 Object in Character Card V2.
 
-This field *SHOULD* be migrated to `character_book` field as a new lorebook entry, with decorator `@@role system` and `@@position after_desc` decorators appended at front of the content field, while trimming `{{original}}` from the content field.
+This field *SHOULD* be migrated to `character_book` field as a new lorebook entry, with decorator `@@role system` and `@@position after_desc` and `@@disable_ui_prompt system_prompt` decorators appended at front of the content field, while trimming `{{original}}` from the content field.
 
 example of migrating the `system_prompt` field:
 ```ts
@@ -630,7 +642,7 @@ example of migrating the `system_prompt` field:
 
 This field is from TavernCardV2 Object in Character Card V2.
 
-This field *SHOULD* be migrated to `character_book` field as a new lorebook entry, with decorator `@@role system` and `@@depth 0` decorators appended at front of the content field, while trimming `{{original}}` from the content field.
+This field *SHOULD* be migrated to `character_book` field as a new lorebook entry, with decorator `@@role system` and `@@depth 0` and `@@disable_ui_prompt post_history_instructions` decorators appended at front of the content field, while trimming `{{original}}` from the content field.
 
 example of migrating the `post_history_instructions` field:
 ```ts
@@ -748,7 +760,7 @@ This section is just a recommendation. applications *MAY* convert the fields in 
 ### `system_prompt`
 
 This field *SHOULD* be set by this algorithm:
-1. find the lorebook entry from `character_book` field with `@@role system` and `@@position after_desc` decorators, and without other decorators.
+1. find the lorebook entry from `character_book` field with `@@role system` and `@@position after_desc` and `@@disable_ui_prompt system_prompt` decorators, and without other decorators.
 2. if the lorebook entry is not found, the value of this field *SHOULD* be an empty string.
 3. if the lorebook entry is found, the value of this field *SHOULD* be the content field of the lorebook entry, with the decorators removed.
 4. if there are multiple lorebook entries that matches the conditions, the application *SHOULD* concatenate the content fields of the lorebook entries, with a newline between them.
@@ -756,7 +768,7 @@ This field *SHOULD* be set by this algorithm:
 ### `post_history_instructions`
 
 This field *SHOULD* be set by this algorithm:
-1. find the lorebook entry from `character_book` field with `@@role system` and `@@depth 0` decorators, and without other decorators.
+1. find the lorebook entry from `character_book` field with `@@role system` and `@@depth 0` and `@@disable_ui_prompt post_history_instructions` decorators, and without other decorators.
 2. if the lorebook entry is not found, the value of this field *SHOULD* be an empty string.
 3. if the lorebook entry is found, the value of this field *SHOULD* be the content field of the lorebook entry, with the decorators removed.
 4. if there are multiple lorebook entries that matches the conditions, the application *SHOULD* concatenate the content fields of the lorebook entries, with a newline between them.
