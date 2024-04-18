@@ -591,7 +591,7 @@ This CBS *MUST* be replaced with a random number between 1 and N. for example, `
 
 This CBS *MUST* be replaced with an empty string, and *SHOULD NOT* be displayed to the user, regardless of the value of A. this value *SHOULD NOT* be used on matching lorebook entries.
 
-### `{{/// A}}`
+### `{{hidden_key:A}}`
 
 Same as `{{// A}}`, but the value *SHOULD* be used on matching lorebook entries.
 
