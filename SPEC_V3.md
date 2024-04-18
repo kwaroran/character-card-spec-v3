@@ -280,11 +280,11 @@ This *MUST* not taken to mean that the application can add their own fields to t
 
 ### `name`
 
-The value of this field *MUST* be a string or undefined. this field *MAY* be used to identify the Lorebook. this field *SHOULD* not be used on prompt engining.
+The value of this field *MUST* be a string or undefined. this field *MAY* be used to identify the Lorebook. this field *SHOULD NOT* be used on prompt engining.
 
 ### `description`
 
-The value of this field *MUST* be a string or undefined. this field *MAY* be used to add comments to the Lorebook. this field *SHOULD* not be used on prompt engineering.
+The value of this field *MUST* be a string or undefined. this field *MAY* be used to add comments to the Lorebook. this field *SHOULD NOT* be used on prompt engineering.
 
 ### `scan_depth`
 
@@ -355,19 +355,19 @@ These fields are inside each entry in the `entries` array. These field are optio
 
 > AgnAI, Risu Compatibility
 
-The value of this field *MUST* be a string or undefined. this field *MAY* be used to identify the lorebook field. this field *SHOULD* not be used on prompt engining.
+The value of this field *MUST* be a string or undefined. this field *MAY* be used to identify the lorebook field. this field *SHOULD NOT* be used on prompt engining.
 
 ### `id`
 
 > ST, Risu Compatibility
 
-The value of this field *MUST* be a string or undefined. this field *MAY* be used to identify the lorebook field. this field *SHOULD* not be used on prompt engining.
+The value of this field *MUST* be a string or undefined. this field *MAY* be used to identify the lorebook field. this field *SHOULD NOT* be used on prompt engining.
 
 ### `comment`
 
 > ST, Risu Compatibility
 
-The value of this field *MUST* be a string or undefined. this field *MAY* be used to add comments to the lorebook field. this field *SHOULD* not be used on prompt engineering.
+The value of this field *MUST* be a string or undefined. this field *MAY* be used to add comments to the lorebook field. this field *SHOULD NOT* be used on prompt engineering.
 
 ### `priority`
 
@@ -589,7 +589,7 @@ This CBS *MUST* be replaced with a random number between 1 and N. for example, `
 
 ### `{{// A}}`
 
-This CBS *MUST* be replaced with an empty string, and *SHOULD* not be displayed to the user, regardless of the value of A. this value *SHOULD* not be used on matchings.
+This CBS *MUST* be replaced with an empty string, and *SHOULD NOT* be displayed to the user, regardless of the value of A. this value *SHOULD NOT* be used on matchings.
 
 ### `{{/// A}}`
 
