@@ -225,7 +225,3 @@ Roll CBS rolls a dice with N sides.
 ### `{{// A}}`
 
 This is a comment CBS, which is used to make comments.
-
-### `{{/// A}}`
-
-Another comment CBS, but it may used on lorebook match and would be displayed on the UI.
