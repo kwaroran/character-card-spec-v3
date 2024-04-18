@@ -205,3 +205,27 @@ this would be helpful for fallbacks.
 This decorator is used for disabling application set `system_prompt` or `post_history_instructions`
 
 This is for no-loss conversion from CCv2 to CCv3 and vice versa.
+
+## Curly Braced Syntax
+
+New Curly braced Syntax (CBS), or macro syntax has been added to the CCv3 specification. Some were already in the many applications, but it wasn't standardized. theses are standardized in the CCv3 specification.
+
+### `{{random:A,B,C...}}`
+
+Random CBS selects a random value from the list.
+
+### `{{pick:A,B,C...}}`
+
+Same as `{{random:A,B,C...}}`, but it application would make effort to make the same value on same conditions.
+
+### `{{roll:N}}`
+
+Roll CBS rolls a dice with N sides.
+
+### `{{// A}}`
+
+This is a comment CBS, which is used to make comments.
+
+### `{{/// A}}`
+
+Another comment CBS, but it may used on lorebook match and would be displayed on the UI.
