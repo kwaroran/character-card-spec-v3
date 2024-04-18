@@ -589,7 +589,11 @@ This CBS *MUST* be replaced with a random number between 1 and N. for example, `
 
 ### `{{// A}}`
 
-This CBS *MUST* be replaced with an empty string, and *SHOULD* not be displayed to the user, regardless of the value of A.
+This CBS *MUST* be replaced with an empty string, and *SHOULD* not be displayed to the user, regardless of the value of A. this value *SHOULD* not be used on matchings.
+
+### `{{/// A}}`
+
+This CBS *MUST* be replaced with an empty string, and *MAY* be displayed to the user, as A. regardless of the value of A. this value *SHOULD* be used on matchings.
 
 ### `<char>`
 
