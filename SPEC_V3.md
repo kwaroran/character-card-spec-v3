@@ -593,7 +593,7 @@ This CBS *MUST* be replaced with an empty string, and *SHOULD* not be displayed 
 
 ### `{{/// A}}`
 
-This CBS *MUST* be replaced with an empty string, and *MAY* be displayed to the user, as A. regardless of the value of A. this value *SHOULD* be used on matchings.
+This CBS *MUST* be replaced with an empty string, and *MAY* be displayed to the user as A if it is in the first message. regardless of the value of A. this value *SHOULD* be used on matchings.
 
 ### `<char>`
 
