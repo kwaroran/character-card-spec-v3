@@ -63,7 +63,7 @@ Application's *MAY* reject the CHARX file if the file is too large, or the file 
 
 The CharacterCard object is a JSON object that contains the information about the character card. CharacterCard object in Character Card V3 is a superset of TavernCardV2 object in Character Card V2, except the fields that are changed or removed.
 
-For the TavernCardV2 object in Character Card V2, see [Character Card V2 Specification](SPEC_V2.md).
+For the TavernCardV2 object in Character Card V2, see [Character Card V2 Specification](https://github.com/malfoyslastname/character-card-spec-v2/blob/main/spec_v2.md).
 
 This document describes the CharacterCard object fields which are not present in TavernCardV2 in Character Card V2, or the fields that are changed in Character Card V3.
 
