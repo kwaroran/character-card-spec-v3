@@ -631,9 +631,9 @@ This field is from TavernCardV2 Object in Character Card V2.
 
 This field *SHOULD* be migrated to `character_book` field as a new lorebook entry, with decorator `@@role system` and `@@position after_desc` decorators appended at front of the content field.
 
-If `{{original}}` exists in the content field, it must also add `@@disable_ui_prompt system_prompt` decorator at the front of the content field, and trim `{{original}}` from the content field.
+If `{{original}}` exists in the content field, it should trim `{{original}}` from the content field. if it doesn't exist, it should also add `@@disable_ui_prompt system_prompt` decorator at the front of the content field.
 
-example of migrating the `system_prompt` field without `{{original}}`:
+example of migrating the `system_prompt` field with `{{original}}`:
 ```ts
 {
   keys: [],
@@ -652,9 +652,9 @@ This field is from TavernCardV2 Object in Character Card V2.
 
 This field *SHOULD* be migrated to `character_book` field as a new lorebook entry, with decorator `@@role system` decorators appended at front of the content field.
 
-If `{{original}}` exists in the content field, it must also add `@@disable_ui_prompt post_history_instructions` decorator at the front of the content field, and trim `{{original}}` from the content field.
+If `{{original}}` exists in the content field, it should trim `{{original}}` from the content field. if it doesn't exist, it should also add `@@disable_ui_prompt post_history_instructions` decorator at the front of the content field.
 
-example of migrating the `post_history_instructions` field  without `{{original}}`:
+example of migrating the `post_history_instructions` field with `{{original}}`:
 ```ts
 {
   keys: [],
