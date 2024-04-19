@@ -83,14 +83,12 @@ interface CharacterCardV3{
     character_version: string
     mes_example: string
     extensions: Record<string, any>
-    
-    //removed fields from CCV2
-    // system_prompt: string
-    // post_history_instructions: string
-    // first_mes: string
-    // alternate_greetings: Array<string>
-    // personality: string
-    // scenario: string
+    system_prompt: string
+    post_history_instructions: string
+    first_mes: string
+    alternate_greetings: Array<string>
+    personality: string
+    scenario: string
 
     //Changes from CCV2
     creator_notes: string
@@ -107,10 +105,7 @@ interface CharacterCardV3{
     nickname?: string
     creator_notes_multilingual?: Record<string, string>
     source?: string[]
-    greetings: Array<{
-      message: string
-      type: 'normal' | 'group_only' | 'single_only'
-    }>
+    group_only_greetings: Array<string>
     creation_date?: number
     modification_date?: number
   }
@@ -203,15 +198,11 @@ If the applicaiton determines that the asset is not valid or accessible or does 
 
 applications *MAY* add more types of assets, but added types *SHOULD* start with `x_` to prevent conflicts with the types defined in the specification.
 
-### `greetings`
+### `group_only_greetings`
 
-The value of this field *MUST* be an array of objects. this field *MUST* be present. this field *MAY* be empty array. this field *MUST* be used to define the greetings that the character card would use.
+The value of this field *MUST* be an array of string. this field *MUST* be present. this field *MAY* be empty array. this field *MUST* be used to define the greetings that the character card would use.
 
-The object in the array *MUST* have a `message` field and a `type` field. the `message` field *MUST* be a string. the `type` field *MUST* be a string and the value *MUST* be either `normal`, `group_only` or `single_only`.
-
-This value *SHOULD* be considered as the greetings that the character card would use. the `type` field *SHOULD* be used to determine the type of the greeting. if the `type` field is `normal`, the greeting *SHOULD* be used for all cases. if the `type` field is `group_only`, the greeting *SHOULD* be used only for group chats. if the `type` field is `single_only`, the greeting *SHOULD* be used only for non-group chats.
-
-However, if there is no greeting that matches the type of the chat, the application *MAY* use the greeting that doesn't match the type of the chat. if there is no greeting at all, the application *MAY* use the default greeting of their own.
+This value *SHOULD* be considered as the additional greetings that the character card would use, only for group chats.
 
 ### `creation_date`
 
@@ -606,241 +597,3 @@ This CBS works same as `{{char}}` CBS.
 ### `<user>`
 
 This CBS works same as `{{user}}` CBS.
-
-
-## Migrating Fields from Character Card V2
-
-This section desribes how removed fields should be migrated to Character Card V3. This section is just a recommendation. applications *MAY* migrate the fields in their own way.
-
-All new lorebooks made while migrating the values *SHOULD* be in the:
-```ts
-{
-  keys: [],
-  content: "", //specified in below sections
-  use_regex: false,
-  enabled: true,
-  constant: true,
-  insertion_order: 100,
-  case_sensitive: false,
-}
-```
-
-### `system_prompt`
-
-This field is from TavernCardV2 Object in Character Card V2.
-
-This field *SHOULD* be migrated to `character_book` field as a new lorebook entry, with decorator `@@role system` and `@@position after_desc` decorators appended at front of the content field.
-
-If `{{original}}` exists in the content field, it should trim `{{original}}` from the content field. if it doesn't exist, it should also add `@@disable_ui_prompt system_prompt` decorator at the front of the content field.
-
-example of migrating the `system_prompt` field with `{{original}}`:
-```ts
-{
-  keys: [],
-  content: "@@role system\n@@position after_desc\n{{system_prompt}}",
-  use_regex: false,
-  enabled: true,
-  constant: true,
-  insertion_order: 100,
-  case_sensitive: false
-}
-```
-
-### `post_history_instructions`
-
-This field is from TavernCardV2 Object in Character Card V2.
-
-This field *SHOULD* be migrated to `character_book` field as a new lorebook entry, with decorator `@@role system` decorators appended at front of the content field.
-
-If `{{original}}` exists in the content field, it should trim `{{original}}` from the content field. if it doesn't exist, it should also add `@@disable_ui_prompt post_history_instructions` decorator at the front of the content field.
-
-example of migrating the `post_history_instructions` field with `{{original}}`:
-```ts
-{
-  keys: [],
-  content: "@@role system\n@@depth 0\n{{post_history_instructions}}",
-  use_regex: false,
-  enabled: true,
-  constant: true,
-  insertion_order: 100,
-  case_sensitive: false
-}
-```
-
-### `personality`
-
-This field is from TavernCardV2 Object in Character Card V2, and TavernCardV1 Object in Character Card V1.
-
-This field *SHOULD* be migrated to `character_book` field as a new lorebook entry, with decorator `@@position personality`  decorators appended at front of the content field.
-
-example of migrating the `personality` field:
-```ts
-{
-  keys: [],
-  content: "@@position personality\n{{personality}}",
-  use_regex: false,
-  enabled: true,
-  constant: true,
-  insertion_order: 100,
-  case_sensitive: false
-}
-```
-
-### `scenario`
-
-This field is from TavernCardV2 Object in Character Card V2, and TavernCardV1 Object in Character Card V1.
-
-This field *SHOULD* be migrated to `character_book` field as a new lorebook entry, with decorator `@@position scenario`  decorators appended at front of the content field.
-
-example of migrating the `scenario` field:
-```ts
-{
-  keys: [],
-  content: "@@position scenario\n{{scenario}}",
-  use_regex: false,
-  enabled: true,
-  constant: true,
-  insertion_order: 100,
-  case_sensitive: false
-}
-```
-
-### `first_mes`
-
-This field is from TavernCardV2 Object in Character Card V2, and TavernCardV1 Object in Character Card V1.
-
-This field *SHOULD* be migrated to `greetings` field as a new element, with `message` field as `first_mes` field, and `type` field as `normal`.
-
-### `alternate_greetings`
-
-This field is from TavernCardV2 Object in Character Card V2.
-
-This field *SHOULD* be migrated to `greetings` field as new elements, with `message` field as the elements in the `alternate_greetings` field, and `type` field as `normal`.
-
-### `secondary_keys`
-
-This field is from CharacterBook Entry in Character Card V2.
-
-This field *SHOULD* be migrated to `@@additional_keys` decorator in the lorebook entry. append the decorator at the front of the content field, if `selective` field is present and true.
-
-for example, if the `secondary_keys` field is `["key1", "key2"]`, the `@@additional_keys key1,key2` decorator *SHOULD* be appended at the front of the content field.
-
-if `selective` field is not present or false, the application *SHOULD* ignore this field.
-
-### `selective`
-
-This field is from CharacterBook Entry in Character Card V2.
-
-This field *SHOULD* be removed, after migrating the `secondary_keys`.
-
-### `position`
-
-This field is from CharacterBook Entry in Character Card V2.
-
-This field *SHOULD* be migrated to `@@position` decorator in the lorebook entry. append the decorator at the front of the content field.
-
-for example, if the `position` field is `"before_char"`, the `@@position before_desc` decorator *SHOULD* be appended at the front of the content field, and the `position` field *SHOULD* be removed.
-
-### `depth_prompt`
-
-This field is from a non-standard extension in Character Card V2.
-
-This field *SHOULD* be migrated to `@@depth` decorator in the lorebook entry, with decorator `@@depth <depth_prompt.depth>` and `@@role <depth_prompt.role>` decorators appended at front, and content as `depth_prompt.content` field.
-
-for example, if the `depth_prompt` field is `{depth: 2, role: "assistant", content: "Hello"}`, it would be migrated to:
-
-```ts
-{
-  keys: [],
-  content: "@@depth 2\n@@role assistant\nHello",
-  use_regex: false,
-  enabled: true,
-  constant: true,
-  insertion_order: 100,
-  case_sensitive: false
-}
-```
-
-## Converting Character Card V3 to Character Card V2
-
-Sometimes, applications may need to convert Character Card V3 to Character Card V2, for backward compatibility. This section describes how the fields should be converted to Character Card V2. however, application *SHOULD NOT* convert Character Card V3 to only Character Card V2, unless it is necessary or user requested, as new fields are not present in Character Card V2.
-
-This section is just a recommendation. applications *MAY* convert the fields in their own way.
-
-### `system_prompt`
-
-This field *SHOULD* be set by this algorithm:
-1. find the lorebook entry from `character_book` field with `@@role system` and `@@depth 0` and `@@disable_ui_prompt system_prompt` decorators, and without other decorators.
-2. if the lorebook entry is not found, go to a1.
-3. if the lorebook entry is found, the value of this field *SHOULD* be the content field of the lorebook entry, with the decorators removed.
-4. add `{{original}}` to the content field.
-5. if there are multiple lorebook entries that matches the conditions, the application *SHOULD* use the first lorebook entry that matches the conditions.
-
-A1. if the lorebook entry is not found, find the lorebook entry from `character_book` field with `@@role system` and `@@depth 0` decorators, and without other decorators.
-A2. if the lorebook entry is not found, the value of this field *SHOULD* be an empty string.
-A3. if the lorebook entry is found, the value of this field *SHOULD* be the content field of the lorebook entry, with the decorators removed.
-A4. if there are multiple lorebook entries that matches the conditions, the application *SHOULD* use the first lorebook entry that matches the conditions.
-
-### `post_history_instructions`
-
-This field *SHOULD* be set by this algorithm:
-1. find the lorebook entry from `character_book` field with `@@role system` and `@@depth 0` and `@@disable_ui_prompt post_history_instructions` decorators, and without other decorators.
-2. if the lorebook entry is not found, go to a1.
-3. if the lorebook entry is found, the value of this field *SHOULD* be the content field of the lorebook entry, with the decorators removed.
-4. add `{{original}}` to the content field.
-5. if there are multiple lorebook entries that matches the conditions, the application *SHOULD* use the first lorebook entry that matches the conditions.
-
-A1. if the lorebook entry is not found, find the lorebook entry from `character_book` field with `@@role system` and `@@depth 0` decorators, and without other decorators.
-A2. if the lorebook entry is not found, the value of this field *SHOULD* be an empty string.
-A3. if the lorebook entry is found, the value of this field *SHOULD* be the content field of the lorebook entry, with the decorators removed.
-A4. if there are multiple lorebook entries that matches the conditions, the application *SHOULD* use the first lorebook entry that matches the conditions.
-
-### `personality`
-
-This field *SHOULD* be set by this algorithm:
-1. find the lorebook entry from `character_book` field with `@@position personality` decorator, and without other decorators.
-2. if the lorebook entry is not found, the value of this field *SHOULD* be an empty string.
-3. if the lorebook entry is found, the value of this field *SHOULD* be the content field of the lorebook entry, with the decorators removed.
-4. if there are multiple lorebook entries that matches the conditions, the application *SHOULD* concatenate the content fields of the lorebook entries, with a newline between them.
-
-### `scenario`
-
-This field *SHOULD* be set by this algorithm:
-1. find the lorebook entry entry from `character_book` field `@@position scenario` decorator, and without other decorators.
-2. if the lorebook entry is not found, the value of this field *SHOULD* be an empty string.
-3. if the lorebook entry is found, the value of this field *SHOULD* be the content field of the lorebook entry, with the decorators removed.
-4. if there are multiple lorebook entries that matches the conditions, the application *SHOULD* concatenate the content fields of the lorebook entries, with a newline between them.
-
-### `first_mes`
-
-This field *SHOULD* be set by this algorithm:
-1. find get the first element of the `greetings` field, `type` field does not matter.
-2. if the element is not found, the value of this field *SHOULD* be an empty string.
-3. if the element is found, the value of this field *SHOULD* be the `message` field of the element.
-
-### `alternate_greetings`
-
-This field *SHOULD* be set by this algorithm:
-1. get all elements of the `greetings` field, except the first element.
-2. if there are no elements that matches the conditions, the value of this field *SHOULD* be an empty array.
-3. if there are elements that matches the conditions, the value of this field *SHOULD* be an array with the `message` field of the elements.
-
-### `depth_prompt`
-
-This field *SHOULD* be set by this algorithm:
-
-1. find the lorebook entry from `character_book` field with `@@depth` decorator and optionally `@@role` decorator, without other decorators.
-2. if the lorebook entry is not found, the value of this field *SHOULD* be an empty object.
-3. if the lorebook entry is found, the value of this field *SHOULD* be an object with `depth` field as the value of the `@@depth` decorator, `role` field as the value of the `@@role` decorator, and `content` field as the content field of the lorebook entry, with the decorators removed.
-    - if `@@role` decorator is not present, the value of the `role` field *SHOULD* be null/undefined.
-4. if there are multiple lorebook entries that matches the conditions, the application *SHOULD* use the first lorebook entry that matches the conditions.
-
-### `character_book` entries
-
-This field *SHOULD* be converted to Character Card V2 as follows:
-
-1. exclude the lorebook entries that are converted to `system_prompt`, `post_history_instructions`, `personality`, `scenario`, `first_mes`, `alternate_greetings`, `depth_prompt` fields.
-2. if the lorebook entry has `@@additional_keys` decorator, the `secondary_keys` field *SHOULD* be set as the values of the decorator, separated by a comma, and `selective` field *SHOULD* be set as true. if `@@additional_keys` decorator is not present, the `secondary_keys` field *SHOULD* be set as an empty array, and `selective` field *SHOULD* be set as false.
-3. remove all decorators from the content field.
-
-<!-- Draft by @kwaroran -->
