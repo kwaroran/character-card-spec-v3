@@ -34,13 +34,9 @@ This allows botmakers to make characters with alternative icons, embeded backgro
 
 However, this field's features is not required to implement, and it is up to the application to support it.
 
-### greetings
+### group_only_greetings
 
-Greetings field is a replacement for `first_mes` and `alternate_greetings` fields in the CCv2 specification.
-
-Unlike the `first_mes` and `alternate_greetings` fields, greetings field able to specify greeting messages for only group chats or only 1-1 chats.
-
-`first_mes` and `alternate_greetings` fields are deprecated in the CCv3 specification.
+Group only greetings field is added to the specification to store greetings that are only active in group chats. this would be helpful for applications to make greetings that are only active in group chats.
 
 ### nickname
 
@@ -90,8 +86,6 @@ Prompt text here
 ```
 
 This is a example of a prompt with a fallback decorator. if the application does not support `@@activate_after_emotion`, it will fallback to the default behavior, which is `@@instruct_depth 5`. and if the application does not support `@@instruct_depth` (like not a instruct model), it will fallback to `@@depth 5`.
-
-This makes other fields like `system_prompt` and `post_history_instructions` deprecated, since they can be implemented in the lorebook, with same behavior with more features.
 
 However, `description` field still exists, since it is used to make simple character cards, and it is used more then inserting as prompts nowadays.
 
@@ -165,8 +159,6 @@ This decorator makes lorebook entry only active only for specific greeting.
 
 This decorator makes lorebook entry positioned at a specific position, like position field in the CCv2 specification, but with more positioning options.
 
-Old position field is deprecated in CCv3.
-
 ### @@ignore_on_max_context
 
 This decorator makes lorebook entry ignore if the context reaches max context.
@@ -174,8 +166,6 @@ This decorator makes lorebook entry ignore if the context reaches max context.
 ### @@additional_keys N,N...
 
 This decorator makes lorebook entry active only if the additional keys are matched too like `secondary_keys` field in the CCv2 specification.
-
-Old `secondary_keys` field, and `selective` field is deprecated in CCv3.
 
 ### @@exclude_keys N,N...
 

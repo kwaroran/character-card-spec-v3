@@ -247,10 +247,9 @@ type Lorebook = {
     id?: number
     comment?: string
 
-    // Removed Fields from V2
-    // selective?: boolean
-    // secondary_keys?: Array<string>
-    // position?: 'before_char' | 'after_char'
+    selective?: boolean
+    secondary_keys?: Array<string>
+    position?: 'before_char' | 'after_char'
   }>
 }
 ```
@@ -303,6 +302,16 @@ These fields are inside each entry in the `entries` array.
 The value of this field *MUST* be a array of strings if `use_regex` is nullish or false. If `use_regex` is true, the value of this field *MUST* be a string.
 
 The lorebook field would be considered as a match if the chat log contains one of the strings in `keys` and `scan_depth`'s conditions and decorator's conditions are met. how the prompt matches specifically is up to the application, unless other fields and decorators specify otherwise.
+
+### `secondary_keys`
+
+This value *MUST* be a multiple values separated by a comma, as strings. if this value is present and `selective` is true,, the lorebook field *SHOULD NOT* considered as a match if the chat log do not contains one of the strings in value. how the prompt matches specifically is up to the application, unless other fields and decorators specify otherwise.
+
+decorator that modifies `keys` field's behavior also modifies `secondary_keys` field. if `use_regex` is true, this field *SHOULD* be ignored.
+
+### `selective`
+
+The value of this field *MUST* be a boolean. if this value is used with `secondary_keys` field.
 
 ### `content`
 
