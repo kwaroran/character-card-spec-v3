@@ -64,6 +64,8 @@ The main and biggest change in the CCv3 specification is the lorebook change. Th
 
 Decorators are made for core users to make advanced prompts, without needing to make a new field for, it which makes newcomers confused, by making raw input for the decorators, without needing to make a UI for every single decorator.
 
+If the decorators is conditional decorators (like make active after a N turn), to make the lorebook entry active, the application should check the all condition to make the lorebook entry active (AND).
+
 ```
 @@depth 5
 @@ignore_on_max_context
@@ -187,13 +189,13 @@ this would be helpful for botmaker making something known as "persona" embeded i
 
 ### @@dont_activate
 
-This decorator makes lorebook entry not activate in any case.
+This decorator makes lorebook entry not activate in any case, even if the key values are matched, and other decorators' conditions are met.
 
 this would be helpful for fallbacks, or just making lorebook entry as a note.
 
 ### @@activate
 
-This decorator makes lorebook entry activate in any case.
+This decorator makes lorebook entry activate in any case, even if the key values are not matched, or other decorators' conditions are not met.
 
 this would be helpful for fallbacks.
 
