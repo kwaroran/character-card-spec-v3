@@ -373,8 +373,6 @@ The value of this field *MUST* be a string or undefined. this field *MAY* be use
 
 > AgnAI Compatibility
 
-> Should we migrate this field to decorator?
-
 The value of this field *MUST* be a number or undefined. if this field is present, the application *MAY* remove the lowest priority lorebook fields first if the lorebook fields reaches `token_budget` limit. if this field is undefined, applications *MAY* follow the `insertion_order` field instead.
 
 ## Decorators
