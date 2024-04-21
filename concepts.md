@@ -22,10 +22,6 @@ method that allows embed external assets and metadata in PNG files also added to
 
 ## New Fields
 
-### license
-
-License field is added to the specification to store the license of the character card. It is a string field that contains the license of the character card. this field could be used to store license information and easily access it.
-
 ### assets
 
 Assets field is added to the specification to store the assets of the character card. This contains icon, background, user icon, emotion and inlay assets of the character card.

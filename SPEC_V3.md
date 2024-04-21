@@ -95,7 +95,6 @@ interface CharacterCardV3{
     character_book?: Lorebook
 
     //New fields in CCV3
-    license?: string
     assets?: Array<{
       type: string
       uri: string
@@ -141,10 +140,6 @@ The value of this field *MUST* be a Lorebook object or undefined. if this field 
 ### `creator_notes`
 
 The value of this field *MUST* be a string. this value *MUST* considered as creator notes if `creator_notes_multilingual` is undefined. if `creator_notes_multilingual` is present, the application *SHOULD* considered this as a creator note for `en` language, if `creator_notes_multilingual` does not have a key for `en` language. if is not, the application *SHOULD* ignore this field.
-
-### `license`
-
-The value of this field *MUST* be a string or undefined. if this field is present, the application *SHOULD* be right next to `creator_notes` field display. This field *MAY* be used to determine the license of the character card. The display of this field *MAY* be a image or a text linked to the license's page. The value *SHOULD NOT* contain the license's full text. The value *SHOULD* be a short name of the license like "CC BY-SA 4.0". License *SHOULD* be interpreted as it only apply to the ChracterCard object itself, not the character's image or assets to prevent legal confusion unless the `creator_notes` field or `creator_notes_multilingual` field specifies otherwise. this disclaimer *SHOULD* be displayed near the field in the editor of the application.
 
 ### `nickname`
 
