@@ -111,9 +111,13 @@ This field is a boolean that makes lorebook entry use regex to match the key val
 
 This decorator makes lorebook entry only active after a N turns of the conversation.
 
+This can be implemented as as: if user's message count is not greater than N, then the lorebook entry would not be active.
+
 ### @@activate_only_every N
 
 This decorator makes lorebook entry only active every N turns of the conversation.
+
+This can be implemented as as: if user's message count is not divisible by N, then the lorebook entry would not be active.
 
 ### @@keep_activate_after_match
 
