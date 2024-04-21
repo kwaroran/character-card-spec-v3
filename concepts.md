@@ -197,8 +197,6 @@ this would be helpful for fallbacks.
 
 This decorator is used for disabling application set `system_prompt` or `post_history_instructions`
 
-This is for no-loss conversion from CCv2 to CCv3 and vice versa.
-
 ## Curly Braced Syntax
 
 New Curly braced Syntax (CBS), or macro syntax has been added to the CCv3 specification. Some were already in the many applications, but it wasn't standardized. theses are standardized in the CCv3 specification.
