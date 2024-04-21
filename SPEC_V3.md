@@ -592,7 +592,7 @@ Same as `{{// A}}`, but the value *SHOULD* be used on matching lorebook entries.
 
 ### `{{comment: A}}`
 
-This CBS *MUST* be replaced with an empty string when sending as a prompt. and *SHOULD* be displayed to the user as inline comment with content A. this value *SHOULD NOT* be used on matching lorebook entries.
+This CBS *MUST* be replaced with an empty string when sending as a prompt. and *SHOULD* be displayed to the user as inline comment with content A if its in message. this value *SHOULD NOT* be used on matching lorebook entries.
 
 ### `<char>`
 
