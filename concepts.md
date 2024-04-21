@@ -62,7 +62,7 @@ Modification date field is added to the specification to store the modification 
 
 The main and biggest change in the CCv3 specification is the lorebook change. The lorebook can use `@@decorator` syntax to put advanced features, like positioning, activate after a N turn, and more, to make the lorebook as a powerful, unified field to insert prompts.
 
-Decorators are made for core users to make advanced prompts, without needing to make a new field for, it which makes newcomers confused.
+Decorators are made for core users to make advanced prompts, without needing to make a new field for, it which makes newcomers confused, by making raw input for the decorators, without needing to make a UI for every single decorator.
 
 ```
 @@depth 5
@@ -90,7 +90,6 @@ This is a example of a prompt with a fallback decorator. if the application does
 However, `description` field still exists, since it is used to make simple character cards, and it is used more then inserting as prompts nowadays.
 
 Also, lorebook export format and field's behavior is standardized in the specification, unlike the CCv2 specification which does not have a standardized lorebook export format and field's behavior.
-
 
 ## New Fields in Lorebook
 
