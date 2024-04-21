@@ -103,6 +103,10 @@ Technically, this field exists in the CCv2 specification, but it was a optional 
 
 This field is a boolean that makes lorebook entry use regex to match the key values so botmakers can use regex to match more complex key values.
 
+Applications are allowed to terminate/ignore the lorebook entry if the regex is too complex, or if the regex is vulnerable to ReDoS attacks.
+
+We recommend to use `re2` regex engine, if you are going to implement this field on server side.
+
 ## Decorators
 
 ### @@activate_only_after N
@@ -156,6 +160,8 @@ Same as `@@scan_depth`, but for instruct models.
 ### @@is_greeting N
 
 This decorator makes lorebook entry only active only for specific greeting.
+
+@@is_greeting 0 would be the default greeting, and @@is_greeting 1 would be the first alternative greeting, and @@is_greeting 2 would be the second alternative greeting, and so on.
 
 ### @@position
 

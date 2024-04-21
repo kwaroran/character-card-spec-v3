@@ -501,7 +501,7 @@ The value of this decorator *MUST* be a number, and it does not have multiple va
 
 ### `@@is_greeting`
 
-This decorator's value *MUST* be a number, and it does not have multiple values. if this decorator is present, the lorebook entry *MUST NOT* considered as a match if the active greeting's index is not equal to the value of this decorator. the index *MUST* start from 1. for example: if it uses first greeting, the value of this decorator *MUST* be 1. if it uses second greeting, the value of this decorator *MUST* be 2, and so on.
+This decorator's value *MUST* be a number, and it does not have multiple values. if this decorator is present, the lorebook entry *MUST NOT* considered as a match if the active greeting's index is not equal to the value of this decorator. the index *MUST* start from 0. for example: if it uses default greeting (`first_msg`), the value of this decorator *MUST* be 0. if it uses first element of `alternate_greetings`, the value of this decorator *MUST* be 1, and if it uses second element of `alternate_greetings`, the value of this decorator *MUST* be 2, and so on.
 
 If the application does not support greetings, or checking the active greeting is not possible, the application *SHOULD* ignore this decorator.
 
