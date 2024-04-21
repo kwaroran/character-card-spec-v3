@@ -419,6 +419,8 @@ applications *SHOULD* support multiple fallback decorators like below. this way,
 @@@activate_every 4
 ```
 
+On backfilling V2, the application *SHOULD* consider remove all decorators.
+
 ### `@@activate_only_after`
 
 This decorator's value *MUST* be a number, and it does not have multiple values. if this decorator is present, the lorebook entry *SHOULD NOT* considered as a match until the chat log's assistant (or character's) message count is equal to or greater than the value of this decorator. If the context isn't chat based, the application *SHOULD* ignore this decorator.
