@@ -99,7 +99,6 @@ This field is a boolean that makes lorebook entry always active regardless of th
 
 Technically, this field exists in the CCv2 specification, but it was a optional field to implement, in CCv3, it is a required field to implement.
 
-
 ### use_regex
 
 This field is a boolean that makes lorebook entry use regex to match the key values so botmakers can use regex to match more complex key values.
