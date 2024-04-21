@@ -133,7 +133,7 @@ This decorator makes lorebook entry positioned at a specific depth, like unstand
 
 ### @@instruct_depth
 
-Same as `@@depth`, but for instruct models.
+Same as `@@depth`, but for non-chat context, and checking as token depth.
 
 ### @@reverse_depth
 
@@ -141,7 +141,7 @@ Same as `@@depth`, but for counting from the top.
 
 ### @@reverse_instruct_depth
 
-Same as `@@reverse_depth`, but for instruct models.
+Same as `@@reverse_depth`, but for non-chat context, and checking as token depth.
 
 ### @@role
 
