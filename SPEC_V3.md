@@ -23,7 +23,7 @@ This document is a proposal and the specification is not final. The specificatio
 
 CharacterCardV3 objects could be embedded in PNG or APNG files. The CharacterCardV3 object *MUST* be embedded in the PNG or APNG file as a tEXt chunk. The tEXt chunk *MUST* be named `ccv3` and the value of the tEXt chunk *MUST* be the JSON string of the CharacterCardV3 object. the JSON string *MUST* escape unicode characters (like `\uXXXX`), to adhere to the PNG specification.
 
-Application *MAY* backfill Character Card V2 objects from the PNG/APNG files in `chara` chunk. however, Application backfilling Character Card V2 objects from the PNG/APNG files *SHOULD* add a warning to the user that it is backfilled on `creator_notes` field in the TavernCardV2 object. like: `This character card is Character Card V3, but it is loaded as a Character Card V2. Please use a Character Card V3 compatible application to use this character card properly.` The backfilled `chara` chunk *MAY* be trimmed on import.
+Application *MAY* backfill Character Card V2 objects from the PNG/APNG files in `chara` chunk. however, Application backfilling Character Card V2 objects from the PNG/APNG files *SHOULD* add a warning to the user that it is backfilled on `creator_notes` field in the TavernCardV2 object. like: `This character card is Character Card V3, but it is loaded as a Character Card V2. Please use a Character Card V3 compatible application to use this character card properly.` unless its exported only for Character Card V2, not for Character Card V3. The backfilled `chara` chunk *SHOULD* be trimmed on import.
 
 if the application detects both `chara` and `ccv3` chunk, the application *SHOULD* use the `ccv3` chunk.
 
