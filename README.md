@@ -1,4 +1,4 @@
-# Character Card V3: Proposal Draft
+# Character Card V3 Specification: Draft
 
 > THIS DOCUMENT IS A PROPOSAL DRAFT. IT IS NOT FINALIZED YET. IT IS SUBJECT TO CHANGE. DO NOT IMPLEMENT THIS SPECIFICATION YET FOR PRODUCTION USE.
 
@@ -13,3 +13,14 @@ For the full specification, check the [SPEC_V3.md](SPEC_V3.md) document.
 If you want to contribute to this specification, you can create a pull request to this repository. You can also create an issue for discussion.
 
 If you don't have a GitHub account, you can also send an email to amasio1234@proton.me or contact me on Discord (kwaroran).
+
+## Current Status
+
+- [x] Write draft document
+- [x] Write concepts document
+- [ ] Get first approval from developers
+- [ ] Gather feedbacks from community
+- [ ] Make changes based on feedbacks
+- [ ] Get final approval from developers
+- [ ] Remove the draft status, finalize the document
+- [ ] Implement the specification
