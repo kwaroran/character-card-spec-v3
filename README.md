@@ -18,9 +18,6 @@ If you don't have a GitHub account, you can also send an email to amasio1234@pro
 
 - [x] Write draft document
 - [x] Write concepts document
-- [ ] Get first approval from developers
-- [ ] Gather feedbacks from community
-- [ ] Make changes based on feedbacks
-- [ ] Get final approval from developers
+- [x] Get approval from developers
 - [ ] Remove the draft status, finalize the document
 - [ ] Implement the specification
