@@ -227,3 +227,7 @@ Same as `{{// A}}`, but it can be used in the lorebook matching.
 ### `{{comment:A}}`
 
 It would be displayed as a inline comment in the message, and not be sent to AI model.
+
+### `{{reverse:A}}`
+
+Reverse CBS reverses the string, used for spoilers, or something like that.

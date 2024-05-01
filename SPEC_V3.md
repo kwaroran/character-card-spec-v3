@@ -594,6 +594,11 @@ Same as `{{// A}}`, but the value *SHOULD* be used on matching lorebook entries.
 
 This CBS *MUST* be replaced with an empty string when sending as a prompt. and *SHOULD* be displayed to the user as inline comment with content A if its in message. this value *SHOULD NOT* be used on matching lorebook entries.
 
+
+### `{{reverse:A}}`
+
+This CBS *MUST* be replaced with the reversed version of the value of A. for example, `{{reverse:Hello}}` *MUST* be replaced with `olleH`.
+
 ### `<char>`
 
 This CBS works same as `{{char}}` CBS.
