@@ -27,7 +27,7 @@ Application *MAY* backfill Character Card V2 objects from the PNG/APNG files in 
 
 if the application detects both `chara` and `ccv3` chunk, the application *SHOULD* use the `ccv3` chunk.
 
-PNG/APNG files *MAY* have additional tEXt chunks that works like assets embeded in CHARX files. the tEXt chunk *MUST* be named `__asset:{path}` and the value of the tEXt chunk *MUST* be the base64 encoded binary data. and it could be accessed by `__asset:{path}` URI. however, implementing this on new applications *SHOULD* be avoided, and CHARX files *SHOULD* be used instead.
+PNG/APNG files *MAY* have additional tEXt chunks that works like assets embeded in CHARX files. the tEXt chunk *MUST* be named `chara-ext-asset_:{path}` and the value of the tEXt chunk *MUST* be the base64 encoded binary data. and it could be accessed by `__asset:{path}` URI. however, implementing this on new applications *SHOULD* be avoided, and CHARX files *SHOULD* be used instead.
 
 ## JSON
 
@@ -186,7 +186,7 @@ This *MUST NOT* taken to mean that the application must support these features. 
 
 for other types, it is up to the application how to use and write the name field. for example, `name` field *MAY* be used as a name of the background like `forest`, `city`, `space` etc.
 
-`ext` field *MUST* be a string. this field *MUST* be a file extension of the asset for checking the format of the asset. this field *MUST* be in lowercase and this field *MUST* be a valid file extension without `.` like `png`. if the application does not support the file extension, the application *MAY* ignore the asset.
+`ext` field *MUST* be a string. this field *MUST* be a file extension of the asset for checking the format of the asset. this field *MUST* be in lowercase and this field *MUST* be a valid file extension without `.` like `png`. if the application does not support the file extension, the application *MAY* ignore the asset. `ext` may also be `unknown` for unknown file extensions.
 Applications can decide what format to support. however, applications *SHOULD* support at least png, jpeg and webp format. if `uri` field is `ccdefault:`, this field *SHOULD* be ignored.
 
 If the applicaiton determines that the asset is not valid or accessible or does not support the feature that the asset is used for, the application *MAY* ignore the asset, but the application *SHOULD* keep the asset data so it can be exported safely. if it is impossible or hard to save the asset data, the application *MAY* not save the asset data and do not export the asset data when exporting the CharacterCard object, but it *MUST* alert the user that the asset is not saved.
