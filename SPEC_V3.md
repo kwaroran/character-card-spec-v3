@@ -1,7 +1,6 @@
-# Character Card V3: Proposal Draft
+# Character Card V3 Specification
 
-This document describes the Character Card V3 specification (shorted as CCv3) draft. This document is a draft and the specification is subject to change.
-This document is a proposal and the specification is not final. The specification is open to suggestions and changes.
+This document describes the Character Card V3 specification (shorted as CCv3).
 
 # Keywords
 
@@ -127,7 +126,7 @@ The value for this field *MUST* be `"3.0"`. This field is used to determine the 
 
 How the `spec_version` is determined as a newer version is by parsing the string as a float. if the float is bigger than `3.0`, the application *SHOULD* consider the Character Card object as a newer version of the specification. if the float is smaller than `3.0`, the application *SHOULD* consider the Character Card object as an older version of the specification.
 
-If the application does not support the newer version of the specification, the application *SHOULD* alert the user that the Character Card object is created with a newer version of the specification, and the application *MAY* not support the new features that are added in the newer version of the specification.
+If the application does not support the newer version of the specification, the application *SHOULD* alert the user that the Character Card object is created with a newer version of the specification, and the application *MAY* not support the new features that are added in the newer version of the specification. however, the application *SHOULD* support importing of it.
 
 If the application is older than the version of the specification, the application *SHOULD* fill the missing fields with default values. default fields are:
 

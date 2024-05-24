@@ -1,6 +1,4 @@
-# Character Card V3 Specification: Draft
-
-> THIS DOCUMENT IS A PROPOSAL DRAFT. IT IS NOT FINALIZED YET. IT IS SUBJECT TO CHANGE. DO NOT IMPLEMENT THIS SPECIFICATION YET FOR PRODUCTION USE.
+# Character Card V3 Specification
 
 This document is a proposal for the Character Card V3 specification. It is designed to be used in various platforms and applications. It is based on the [CCv2](https://github.com/malfoyslastname/character-card-spec-v2/blob/main/spec_v2.md) specification and extends it with new features.
 
@@ -19,5 +17,5 @@ If you don't have a GitHub account, you can also send an email to amasio1234@pro
 - [x] Write draft document
 - [x] Write concepts document
 - [x] Get approval from developers
-- [ ] Remove the draft status, finalize the document
+- [x] Remove the draft status, finalize the document
 - [ ] Implement the specification
