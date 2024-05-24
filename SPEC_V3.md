@@ -587,7 +587,7 @@ This CBS *MUST* be replaced with an empty string, and *SHOULD NOT* be displayed 
 
 ### `{{hidden_key:A}}`
 
-Same as `{{// A}}`, but the value *SHOULD* be used on matching lorebook entries.
+Same as `{{// A}}`, but the value *SHOULD* be used on matching lorebook entries if its scanned recursively.
 
 ### `{{comment: A}}`
 
