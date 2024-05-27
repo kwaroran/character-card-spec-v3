@@ -200,11 +200,11 @@ This value *SHOULD* be considered as the additional greetings that the character
 
 ### `creation_date`
 
-The value of this field *MUST* be a number or undefined. this field *MAY* be used to determine the creation date of the character card. the value *MUST* be a unix timestamp in milliseconds. application *SHOULD* add this field when the character card is created. application *SHOULD NOT* allow the user to edit this field. application *SHOULD NOT* modify this field if the value is already present. the time *MUST* be Unix timestamp in seconds, in UTC timezone. application *MAY* put `0` instead to this field to determine that the creation date is unknown for privacy reasons and more.
+The value of this field *MUST* be a number or undefined. this field *MAY* be used to determine the creation date of the character card. the value *MUST* be a unix timestamp in seconds. application *SHOULD* add this field when the character card is created. application *SHOULD NOT* allow the user to edit this field. application *SHOULD NOT* modify this field if the value is already present. the time *MUST* be Unix timestamp in seconds, in UTC timezone. application *MAY* put `0` instead to this field to determine that the creation date is unknown for privacy reasons and more.
 
 ### `modification_date`
 
-The value of this field *MUST* be a number or undefined. this field *MAY* be used to determine the modification date of the character card. the value *MUST* be a unix timestamp in milliseconds. application *SHOULD* add or modify this field when the character card is exported, and *MAY* modify this field when the character card is modified. application *SHOULD NOT* allow the user to edit this field. the time *MUST* be Unix timestamp in seconds, in UTC timezone. application *MAY* put `0` instead to this field to determine that the modification date is unknown for privacy reasons and more.
+The value of this field *MUST* be a number or undefined. this field *MAY* be used to determine the modification date of the character card. the value *MUST* be a unix timestamp in seconds. application *SHOULD* add or modify this field when the character card is exported, and *MAY* modify this field when the character card is modified. application *SHOULD NOT* allow the user to edit this field. the time *MUST* be Unix timestamp in seconds, in UTC timezone. application *MAY* put `0` instead to this field to determine that the modification date is unknown for privacy reasons and more.
 
 ## Lorebook Fields
 
