@@ -293,7 +293,7 @@ These fields are inside each entry in the `entries` array.
 
 ### `keys`
 
-The value of this field *MUST* be a array of strings. If `use_regex` is true, the value of this field *MUST* be a array of string with one element.
+The value of this field *MUST* be a array of strings. If `use_regex` is true, the value of this field *MUST* be a array of string.
 
 The lorebook field would be considered as a match if the chat log contains one of the strings in `keys` and `scan_depth`'s conditions and decorator's conditions are met. how the prompt matches specifically is up to the application, unless other fields and decorators specify otherwise.
 
@@ -319,7 +319,9 @@ Content field can contain decorators. If the content field contains decorators, 
 
 ### `use_regex`
 
-The value of this field *MUST* be a boolean. if this value is true, the lorebook field would considered as a match if the chat log matches the regex pattern in `keys`, instead of checking if the chat log contains one of the strings in `keys`. if `keys` is not a valid regex pattern, the application *MUST* consider the lorebook field as not a match.
+The value of this field *MUST* be a boolean. if this value is true, the lorebook field would considered as a match if the chat log matches one of the regex patterns in `keys`, instead of checking if the chat log contains one of the strings in `keys`. if the value in `keys` has invalid regex patterns the application *MUST* consider the lorebook field as not a match.
+
+Applications *MAY* use only one regex pattern in the `keys` field which is in the first index of the array for performance reasons.
 
 ### `enabled`
 
@@ -523,7 +525,9 @@ If the application cannot check the max context is reached, the application *SHO
 
 This decorator's value *MUST* be a multiple values separated by a comma, as strings. if this decorator is present, the lorebook field *SHOULD NOT* considered as a match if the chat log do not contains one of the strings in decorator's value. how the prompt matches specifically is up to the application, unless other fields and decorators specify otherwise.
 
-decorator that modifies `keys` field's behavior also modifies `additional_keys` field. if `use_regex` is true, this field *SHOULD* be ignored.
+if `use_regex` is true, instead of the behavior above, the lorebook field *SHOULD* be considered as a match if the chat log matches one of the value, which *SHOULD* be considered as a regex pattern. if the value in decorator's value has invalid regex patterns the application *MUST* consider the lorebook field as not a match.
+
+decorator that modifies `keys` field's behavior also modifies `additional_keys` field, regardless of `use_regex` field.
 
 ### `@@exclude_keys`
 
