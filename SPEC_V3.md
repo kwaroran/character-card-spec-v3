@@ -525,7 +525,7 @@ If the application cannot check the max context is reached, the application *SHO
 
 This decorator's value *MUST* be a multiple values separated by a comma, as strings. if this decorator is present, the lorebook field *SHOULD NOT* considered as a match if the chat log do not contains one of the strings in decorator's value. how the prompt matches specifically is up to the application, unless other fields and decorators specify otherwise.
 
-if `use_regex` is true, instead of the behavior above, the lorebook field *SHOULD* be considered as a match if the chat log matches one of the value, which *SHOULD* be considered as a regex pattern. if the value in decorator's value has invalid regex patterns the application *MUST* consider the lorebook field as not a match.
+if `use_regex` is true, instead of the behavior above, the lorebook field *SHOULD* be considered as a match if the chat log matches one of the value, which *SHOULD* be considered as a regex pattern. if the value in decorator's value has invalid regex patterns the application *MUST* consider the lorebook field as not a match. however, applications *MAY* choose to ignore this field for performance reasons.
 
 decorator that modifies `keys` field's behavior also modifies `additional_keys` field, regardless of `use_regex` field.
 
