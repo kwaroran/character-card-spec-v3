@@ -14,6 +14,7 @@ This document describes the Character Card V3 specification (shorted as CCv3).
 - Application: The application that uses the Character Card V3 specification.
 - Character Editor: The editor that is used to create and edit the Character Card V3 objects.
 - Creator Note: The note that are *SHOULD* be very discoverable for bot user.
+- regex pattern: A Regular Expression pattern that is used to match the text, for example, `/hello/i`.
 
 
 # Embedding Methods
