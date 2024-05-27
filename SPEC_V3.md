@@ -293,7 +293,7 @@ These fields are inside each entry in the `entries` array.
 
 ### `keys`
 
-The value of this field *MUST* be a array of strings. If `use_regex` is true, the value of this field *MUST* be a array of string.
+The value of this field *MUST* be a array of strings.
 
 The lorebook field would be considered as a match if the chat log contains one of the strings in `keys` and `scan_depth`'s conditions and decorator's conditions are met. how the prompt matches specifically is up to the application, unless other fields and decorators specify otherwise.
 
