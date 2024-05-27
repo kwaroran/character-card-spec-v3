@@ -415,7 +415,7 @@ applications *SHOULD* support multiple fallback decorators like below. this way,
 @@@activate_every 4
 ```
 
-On backfilling V2, the application *SHOULD* consider remove all decorators.
+On backfilling V2, the application *SHOULD* remove all decorators.
 
 ### `@@activate_only_after`
 
