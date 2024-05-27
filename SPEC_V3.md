@@ -379,7 +379,7 @@ Decorators are a string that starts with `@@` and ends with a newline. it can co
 
 If the decorator name is not recognized by the application, or the value is not valid, the application *SHOULD* ignore the decorator. applications *MAY* add more decorators for their own use. however, the added decorators *SHOULD* start with `@@` and should only use latin characters and underscores for the name, and named by snake_case.
 
-If there is multiple decorators with same name, the application *SHOULD* only consider the first decorator with the name, unless its a custom decorator made by the application.
+If there is multiple decorators with same name, the application *SHOULD* only consider the first decorator with the name, unless its a custom decorator made by the application, or if its defined in the specification to be used multiple times.
 
 Decorators are used like this:
 
@@ -528,6 +528,8 @@ This decorator's value *MUST* be a multiple values separated by a comma, as stri
 if `use_regex` is true, instead of the behavior above, the lorebook field *SHOULD* be considered as a match if the chat log matches one of the value, which *SHOULD* be considered as a regex pattern. if the value in decorator's value has invalid regex patterns the application *MUST* consider the lorebook field as not a match. however, applications *MAY* choose to ignore this field for performance reasons if `use_regex` is true.
 
 decorator that modifies `keys` field's behavior also modifies `additional_keys` field, regardless of `use_regex` field.
+
+This decorator can be used multiple times.
 
 ### `@@exclude_keys`
 
