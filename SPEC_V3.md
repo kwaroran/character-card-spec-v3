@@ -604,15 +604,3 @@ This CBS *MUST* be replaced with an empty string when sending as a prompt. and *
 ### `{{reverse:A}}`
 
 This CBS *MUST* be replaced with the reversed version of the value of A. for example, `{{reverse:Hello}}` *MUST* be replaced with `olleH`.
-
-### `<char>`
-
-This CBS works same as `{{char}}` CBS.
-
-### `<bot>`
-
-This CBS works same as `{{char}}` CBS.
-
-### `<user>`
-
-This CBS works same as `{{user}}` CBS.
