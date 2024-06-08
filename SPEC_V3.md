@@ -41,8 +41,9 @@ CHARX file *SHOULD* follow this rule saving the assets:
 - if the asset is a image like `.png` or `.avif`, the asset *SHOULD* be saved at 'assets/{type}/images/' directory.
 - if the asset is a audio like `.mp3`, the asset *SHOULD* be saved at 'assets/{type}/audio/' directory.
 - if the asset is a video like `.mp4` or `.webm`, the asset *SHOULD* be saved at 'assets/{type}/video/' directory.
+- if the asset is a Live2d model, the assets *SHOULD* be saved at 'assets/{type}/l2d/' directory
 - if the asset is a 3d model like `.mmd` or `.obj`, the asset *SHOULD* be saved at 'assets/{type}/3d/' directory.
-- if the asset is a AI model like `.safetensors` or `.ckpt`, the asset *SHOULD* be saved at 'assets/{type}/ai/' directory.
+- if the asset is a AI model like `.safetensors` or `.ckpt` or `.onnx`, the asset *SHOULD* be saved at 'assets/{type}/ai/' directory.
 - if the asset is a font like `.otf` or `.ttf`, the asset *SHOULD* be saved at 'assets/{type}/fonts/' directory.
 - if the asset is a programing code like `.lua` or `.js`, the asset *SHOULD* be saved at 'assets/{type}/code/' directory.
 - if the asset is a other type of file, the asset *SHOULD* be saved at 'assets/{type}/other/' directory.
