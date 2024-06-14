@@ -35,7 +35,7 @@ CharacterCardV3 objects could be embedded in JSON files. The JSON file *MUST* be
 
 ## CHARX
 
-CharacterCardV3 objects could be embedded in CHARX files. The CHARX file is a file format that is used to store the CharacterCardV3 object. The CHARX file is a zip file that contains the CharacterCardV3 object as a JSON file, and with other assets embedded. The CHARX file *MUST* have a JSON file that contains the CharacterCardV3 object. The JSON file *MUST* be named `card.json` at the root of the zip file. . the assets embedded in the CHARX file can be accessed by `embeded://path/to/asset.png` URI. the path is case sensitive, and sepearated by `/`. CHARX file uses `.charx` file extension.
+CharacterCardV3 objects could be embedded in CHARX files. The CHARX file is a file format that is used to store the CharacterCardV3 object. The CHARX file is a zip file that contains the CharacterCardV3 object as a JSON file, and with other assets embedded. The CHARX file *MUST* have a JSON file that contains the CharacterCardV3 object. The JSON file *MUST* be named `card.json` at the root of the zip file. . the assets embedded in the CHARX file can be accessed by `embeded://path/to/asset.png` URI (Not `embedded://`). the path is case sensitive, and sepearated by `/`. CHARX file uses `.charx` file extension.
 
 CHARX file *SHOULD* follow this rule saving the assets:
 - if the asset is a image like `.png` or `.avif`, the asset *SHOULD* be saved at 'assets/{type}/images/' directory.
