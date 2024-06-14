@@ -18,4 +18,4 @@ If you don't have a GitHub account, you can also send an email to amasio1234@pro
 - [x] Write concepts document
 - [x] Get approval from developers
 - [x] Remove the draft status, finalize the document
-- [ ] Implement the specification
+- [x] Living Standard
