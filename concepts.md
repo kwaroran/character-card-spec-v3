@@ -1,4 +1,5 @@
 > in this document, we don't describe how it should be implemented. For that, you should check the [SPEC_V3.md](SPEC_V3.md) document. **This file SHOULD NOT be used as a only reference for implementing CCv3.**
+> concepts.md is outdated. please check the [SPEC_V3.md](SPEC_V3.md) document for the latest information.
 
 # Concepts of CCv3
 
@@ -11,8 +12,6 @@ This is a list of new features that are added to the CCv3 specification.
 ## New Embedding Methods
 
 Old embeding method, JSON and PNG, is still supported in the CCv3 specification.
-
-However, PNG embedding method is changed a bit. it would now store in `ccv3` chunk, instead of `chara` chunk, and it would not use base64 encoding, just raw data, with escaped unicode characters.
 
 XCHAR embeding method is added to the specification. XCHAR is a new format just for storing character cards. It is a archive format that contains assets and metadata of the character card. It is designed to be used in applications that needs to store external assets and metadata in a single file to share or store.
 
