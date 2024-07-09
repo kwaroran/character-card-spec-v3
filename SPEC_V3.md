@@ -283,7 +283,7 @@ The value of this field *MUST* be a number or undefined. if this field is presen
 
 ### `recursive_scanning`
 
-The value of this field *MUST* be a boolean or undefined. if this field is true, the application *MAY* consider the lorebook entries as a match if other lorebook entries' `content` field is a match, reguardless of `scan_depth`. if this field is false, the application *MUST NOT* consider the lorebook entries as a match if other lorebook entries' `content` field is a match. if this field is undefined, the application can decide how to handle recursive scanning.
+The value of this field *MUST* be a boolean or undefined. if this field is true, the application *MAY* consider the lorebook entries as a match if other lorebook entries' `content` field is a match, regardless of `scan_depth`. if this field is false, the application *MUST NOT* consider the lorebook entries as a match if other lorebook entries' `content` field is a match. if this field is undefined, the application can decide how to handle recursive scanning.
 
 ### `entries`
 
