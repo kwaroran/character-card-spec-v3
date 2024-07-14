@@ -114,8 +114,6 @@ interface CharacterCardV3{
 
 For future versions of the specification, the application *SHOULD* ignore the fields that are not present in the specification, but not reject the import of CharacterCard object. The application *MAY* save the fields that are not present in the specification so it can be exported safely.
 
-`system_prompt`, `post_history_instructions`, `first_mes`, `alternate_greetings`, `personality`, `scenario` fields from Character Card V2 are removed from the CharacterCard object in Character Card V3. However, the application *MAY* save these fields for backward compatibility with Character Card V2. However, the application *MUST NOT* use these fields if its loaded as Character Card V3.
-
 This *MUST* not taken to mean that the application can add their own fields to the CharacterCard object. The application *MUST* follow the specification. for application specific data, the application *MAY* save the data in the `extensions` field, which is specified in V2 specification.
 
 ### `spec`
