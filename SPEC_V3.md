@@ -238,7 +238,7 @@ type Lorebook = {
     // Optional Fields
     name?: string
     priority?: number
-    id?: number
+    id?: number|string
     comment?: string
 
     selective?: boolean
@@ -357,7 +357,7 @@ The value of this field *MUST* be a string or undefined. this field *MAY* be use
 
 > ST, Risu Compatibility
 
-The value of this field *MUST* be a string or undefined. this field *MAY* be used to identify the lorebook field. this field *SHOULD NOT* be used on prompt engining.
+The value of this field *MUST* be a string, number or undefined. this field *MAY* be used to identify the lorebook field. this field *SHOULD NOT* be used on prompt engining.
 
 ### `comment`
 
