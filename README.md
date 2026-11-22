@@ -6,6 +6,8 @@ For short information and concepts, check the [concepts.md](concepts.md) documen
 
 For the full specification, check the [SPEC_V3.md](SPEC_V3.md) document.
 
+For the reasons behind version 3.1 (localizations) and a sample card, check the [proposal-3.1.md](proposal-3.1.md) document.
+
 ## Contributing
 
 If you want to contribute to this specification, you can create a pull request to this repository. You can also create an issue for discussion.

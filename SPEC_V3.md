@@ -1,6 +1,19 @@
 # Character Card V3 Specification
 
-This document describes the Character Card V3 specification (shorted as CCv3).
+This document describes the Character Card V3 specification (shorted as CCv3), version 3.1.
+
+**(3.1)** Version 3.1 adds languages to version 3.0: a card's language, translated fields, translated lorebook
+entries, assets per language, the `{{lang}}` CBS, and `::` as a separator in CBS. It adds no field to the `data`
+object: its additions are standard keys inside `extensions` and a few reader behaviours, so a card of version 3.1
+is still a complete card for an application of version 3.0.
+
+Every addition is marked **(3.1)**. A mark stands at the start of an added section, paragraph or list item. A mark
+on a heading's first paragraph covers that section and the sections under it, and a mark on a paragraph that
+introduces a list covers the list; a mark on a paragraph or list item inside a section of version 3.0 covers that
+paragraph or item alone. Text without a mark is version 3.0's, apart from three lines edited in place: the first
+sentence of this document, the `spec_version` line of the CharacterCard interface, and the first sentence of the
+`spec_version` section. The reasons for each addition and a sample card are
+in [proposal-3.1.md](proposal-3.1.md).
 
 # Keywords
 
@@ -15,6 +28,13 @@ This document describes the Character Card V3 specification (shorted as CCv3).
 - Character Editor: The editor that is used to create and edit the Character Card V3 objects.
 - Creator Note: The note that are *SHOULD* be very discoverable for bot user.
 - regex pattern: A Regular Expression pattern that is used to match the text, for example, `/hello/i`.
+- **(3.1)** Base fields: the fields of the `data` object itself, as opposed to their translations.
+- **(3.1)** Locale: one translation of a card, named by a BCP 47 language tag (RFC 5646) such as `en`, `pt-BR` or
+  `zh-Hant`.
+- **(3.1)** Chat locale: the language tag of the text chosen for one chat, which is the key of a locale, or the
+  card's `language` when the base fields are used. See [Selecting a locale](#selecting-a-locale).
+- **(3.1)** Standard extension key: a key that this specification defines inside the `extensions` of the `data`
+  object or of a lorebook entry. See [Standard `extensions` keys](#standard-extensions-keys).
 
 
 # Embedding Methods
@@ -74,7 +94,7 @@ The CharacterCardV3 object can be described as this typescript interface:
 
 interface CharacterCardV3{
   spec: 'chara_card_v3'
-  spec_version: '3.0'
+  spec_version: '3.0' | '3.1'
   data: {
     // fields from CCV2
     name: string
@@ -112,6 +132,9 @@ interface CharacterCardV3{
 }
 ```
 
+**(3.1)** The `extensions` field can also hold the standard keys of version 3.1, which are typed as
+`StandardExtensions`. See [Standard `extensions` keys](#standard-extensions-keys).
+
 For future versions of the specification, the application *SHOULD* ignore the fields that are not present in the specification, but not reject the import of CharacterCard object. The application *MAY* save the fields that are not present in the specification so it can be exported safely.
 
 This *MUST* not taken to mean that the application can add their own fields to the CharacterCard object. The application *MUST* follow the specification. for application specific data, the application *MAY* save the data in the `extensions` field, which is specified in V2 specification.
@@ -122,7 +145,7 @@ The value for this field *MUST* be `"chara_card_v3"`. applications *SHOULD NOT* 
 
 ### `spec_version`
 
-The value for this field *MUST* be `"3.0"`. This field is used to determine the version of the Character Card object. applications *SHOULD NOT* reject the Character Card object if the value of this field is not equal to `"3.0"` for backward compatibility and future versions of the specification.
+The value for this field *MUST* be `"3.0"` or `"3.1"`. This field is used to determine the version of the Character Card object. applications *SHOULD NOT* reject the Character Card object if the value of this field is not equal to one of these for backward compatibility and future versions of the specification.
 
 How the `spec_version` is determined as a newer version is by parsing the string as a float. if the float is bigger than `3.0`, the application *SHOULD* consider the Character Card object as a newer version of the specification. if the float is smaller than `3.0`, the application *SHOULD* consider the Character Card object as an older version of the specification.
 
@@ -131,6 +154,23 @@ If the application does not support the newer version of the specification, the 
 If the application is older than the version of the specification, the application *SHOULD* fill the missing fields with default values. default fields are:
 
 - Since version `"3.0"` is the first version of the specification, this wouldn't happen on this version of the specification. no default fields are defined.
+- **(3.1)** Version `"3.1"` adds no field to the `data` object, so no default fields are defined for it.
+
+**(3.1)** Which value a card carries:
+
+- An application that supports version 3.1 *SHOULD* write `"3.1"` on a card that uses one of its additions:
+  `extensions.localizations`, `extensions.asset_info`, the `extensions.localizations` of a lorebook entry, or the
+  `{{lang}}` CBS. Any other card carries `"3.0"`.
+- The use of `::` as a separator does not make a card a 3.1 card.
+- An application *MUST NOT* rely on this value to find 3.1 content. It recognises the content by the
+  keys being present, on a card with any `spec_version`, because applications that don't know version 3.1 rewrite
+  this field when they save a card. Some also rewrite `spec` to `chara_card_v2`, and keep the keys; an application
+  reads the standard extension keys of such a card too. This does not set aside the rule in `spec`: such a card is
+  read as a V2 card, and of this specification only its standard extension keys apply.
+- An application or library that validates cards *SHOULD* accept any value that begins with `3.`, in line with
+  the rule above against rejecting a card for its version.
+
+**(3.1)** A minor version of this specification (3.x) only adds to the versions before it.
 
 ### `character_book`
 
@@ -140,6 +180,11 @@ The value of this field *MUST* be a Lorebook object or undefined. if this field 
 
 The value of this field *MUST* be a string. this value *MUST* considered as creator notes if `creator_notes_multilingual` is undefined. if `creator_notes_multilingual` is present, the application *SHOULD* considered this as a creator note for `en` language, if `creator_notes_multilingual` does not have a key for `en` language. if is not, the application *SHOULD* ignore this field.
 
+**(3.1)** When `extensions.localizations` has a `language`, that is the language of this field, and its primary
+language subtag takes the place of `en` in the rule above: an application that reads `creator_notes_multilingual`
+ignores this field when the map has a key for that subtag. Translations of this field are in its `locales`. See
+[`extensions.localizations`](#extensionslocalizations).
+
 ### `nickname`
 
 The value of this field *MUST* be a string or undefined. if the value is present, the syntax `{{char}}`, `<char>` and `<bot>` *SHOULD* be replaced with the value of this field in the prompt instead of the `name` field.
@@ -147,6 +192,26 @@ The value of this field *MUST* be a string or undefined. if the value is present
 ### `creator_notes_multilingual`
 
 The value of this field *MUST* be a object or undefined. if this field is present, the application *MUST* consider this field as a multilingual creator notes. the key of the object *MUST* be a language code in ISO 639-1, without region code. the value of the object *MUST* be a string. the application *SHOULD* display the creator notes in the language that the user's client is set to. the application *MAY* provide language selection for creator notes.
+
+**(3.1)** This field is deprecated in favour of `extensions.localizations`, where `locales[x].creator_notes` is
+the same text as `creator_notes_multilingual[x]`. `extensions.localizations` is the one to use; this field can still
+be read, and can still be written beside it for applications of version 3.0, as follows:
+
+- An application reading a card whose `extensions.localizations` has `locales` takes the creator notes from there
+  and from `creator_notes`, and does not read this field. Any other card is read as above.
+- An application writing such a card *MAY* also write this field for applications of version 3.0. The key for each
+  locale is its primary language subtag (`pt-BR` gives `pt`); a locale without a two-letter code is left out, and
+  when two locales give the same key, one of them is written.
+- When it does, it *SHOULD* also write the base `creator_notes` under the primary language subtag of the card's
+  `language`, ahead of any locale that gives the same key. Otherwise, by the rule in `creator_notes`, an
+  application of version 3.0 stops showing the base notes of a non-English card as soon as an `en` key exists.
+- An application that adds `locales` to a card that already has this field *SHOULD* first copy each of its keys
+  into `locales[key].creator_notes`, leaving out the key that is the primary language subtag of the card's own
+  `language`. When the text under that left-out key differs from `creator_notes`, the application *SHOULD* keep
+  that text as `creator_notes`, since by the rule in `creator_notes` it is the text that was shown.
+- When the card has no `language`, every key is copied, `en` included, and `creator_notes` is kept as it is. By the
+  rule of version 3.0 in `creator_notes`, a map with an `en` key already gives the English notes, which are now in
+  `locales.en`; without an `en` key, `creator_notes` is the text shown for `en`, and stays the base text.
 
 ### `source`
 
@@ -192,6 +257,8 @@ If the applicaiton determines that the asset is not valid or accessible or does 
 
 applications *MAY* add more types of assets, but added types *SHOULD* start with `x_` to prevent conflicts with the types defined in the specification.
 
+**(3.1)** An asset can have variants for other languages. See [`extensions.asset_info`](#extensionsasset_info).
+
 ### `group_only_greetings`
 
 The value of this field *MUST* be an array of string. this field *MUST* be present. this field *MAY* be empty array. this field *MUST* be used to define the greetings that the character card would use.
@@ -205,6 +272,149 @@ The value of this field *MUST* be a number or undefined. this field *MAY* be use
 ### `modification_date`
 
 The value of this field *MUST* be a number or undefined. this field *MAY* be used to determine the modification date of the character card. the value *MUST* be a unix timestamp in seconds. application *SHOULD* add or modify this field when the character card is exported, and *MAY* modify this field when the character card is modified. application *SHOULD NOT* allow the user to edit this field. the time *MUST* be Unix timestamp in seconds, in UTC timezone. application *MAY* put `0` instead to this field to determine that the modification date is unknown for privacy reasons and more.
+
+## Standard `extensions` keys
+
+**(3.1)** Version 3.1 defines a number of keys inside the `extensions` field of the `data` object. They are part
+of this specification, unlike the other contents of `extensions`, which stay application specific.
+
+They are defined there, and not as fields of the `data` object, because of what applications do with a card today.
+RisuAI rebuilds a card when it exports it and drops the fields of `data` that it doesn't know; SillyTavern keeps
+them. Both keep the contents of `extensions`, of the card and of each lorebook entry. Builds of RisuAI that are
+already in use would go on dropping new `data` fields even after a change, and other applications have not been
+checked. (The `extensions` of the lorebook itself are not always kept, so no standard key is defined there.)
+
+```ts
+interface StandardExtensions {
+  localizations?: {
+    language?: string
+    locales?: Record<string, Localization>
+  }
+  asset_info?: Array<{ type: string, name: string, lang?: string, variant_of?: string }>
+}
+```
+
+- Every key is optional, and an application *MAY* support any of them and not the others. What a section asks of
+  an application applies only to one that supports that key.
+- An application *MUST* keep every standard extension key when it exports a card, including those it does not use.
+- Every text value in these keys is card text like any other. This specification says what a value means, and not
+  what an application does with it.
+
+### `extensions.localizations`
+
+**(3.1)** The value of this key *MUST* be an object or undefined. It states the language of the card and holds
+its translations.
+
+```ts
+interface Localization {
+  name?: string
+  nickname?: string
+  description?: string
+  personality?: string
+  scenario?: string
+  first_mes?: string
+  alternate_greetings?: string[]
+  group_only_greetings?: string[]
+  mes_example?: string
+  system_prompt?: string
+  post_history_instructions?: string
+  creator_notes?: string
+  meta?: {
+    origin: 'author' | 'machine' | 'community'
+    translator?: string
+    based_on?: number
+  }
+}
+```
+
+`language` *MUST* be a BCP 47 language tag or undefined. It names the language of the base fields. When it is
+undefined, the language of the base fields is unknown, apart from the rule in `creator_notes`.
+
+`locales` *MUST* be an object or undefined. Each key *MUST* be a well-formed BCP 47 language tag, and each value a
+Localization object. Applications *MUST* compare tags without regard to case, and *SHOULD* write them in their
+usual form (`zh-Hant`, not `zh-hant`). A key equal to `language` *SHOULD NOT* be present.
+
+A Localization object holds the translation of each base field under the same name. A field that is absent, or is
+an empty string, is not translated, and the base field is used for it.
+
+`alternate_greetings` and `group_only_greetings` in a locale follow the base arrays by index: the greeting at an
+index is the translation of the base greeting at that index. An absent or empty array is not translated. An empty
+string at an index, and an index that the locale's array does not reach, give the base greeting. Greetings beyond
+the length of the base array are ignored.
+
+`meta` describes the translation. `origin` says who made it: the card's author, a machine, or someone else.
+`translator` is the name of the person or the model. `based_on` is the value of `modification_date` when the locale
+was last brought up to date; it is a date for people and for the application that wrote it. An application
+*MUST NOT* take `based_on` being lower than `modification_date` to mean that the translation is out of date, since
+applications update `modification_date` on every export. An application that knows its own history of edits *MAY*
+use `based_on` to mark a locale that it has reason to think is out of date, and *MUST NOT* remove a locale for
+that.
+
+An application importing a card *MAY* split text that holds several languages in marked sections (`[KR]`,
+`## English`) into `locales`, when it can tell the languages reliably.
+
+#### Selecting a locale
+
+A locale that translates neither `description` nor `first_mes` is *for display only*: it gives a name or the
+creator notes in another language, and is not used for a chat.
+
+To choose the locale of a chat, the application takes the language tag that is wanted (the user's choice for the
+chat, or else the language of the application) and tries it, then the same tag with its last subtag removed, and
+so on (`zh-Hant-TW`, `zh-Hant`, `zh`; this is the lookup of RFC 4647). At each step:
+
+1. if a key of `locales` is equal to the tag, and that locale is not for display only, that locale is used;
+2. otherwise, if `language` is equal to the tag, the base fields are used.
+
+The first match ends the search. If nothing matches, the base fields are used; the application *MAY* first try a
+locale whose primary language subtag is the wanted one (`en` finding the only English locale, `en-US`).
+
+The *chat locale* is the tag that matched: the key of `locales`, or `language` when the base fields are used. When
+the base fields are used and `language` is undefined, the chat has no locale.
+
+For example, with `language` `en` and a locale `en-GB`, a user who wants `en-GB` gets the locale and one who wants
+`en-US` gets the base fields.
+
+An application *SHOULD* fix the chat locale when the chat starts. Every translatable field of the card that it
+puts in a prompt then comes from that locale or, where the locale has none, from the base fields, and never from
+another locale of the card. The translation of a lorebook entry and the variant of an asset are each found from the
+chat locale by a lookup of their own, so that a chat whose locale is `en-GB` can use an entry's `en` translation.
+An application never puts text that was chosen for two different chat locales into one prompt. A change of locale
+during a chat applies from the next prompt.
+
+Where the application shows a card outside a chat (its name, its creator notes), it runs the same lookup without
+passing over the locales that are for display only.
+
+### `extensions.asset_info`
+
+**(3.1)** The value of this key *MUST* be an array of objects or undefined. An asset has no `extensions` of its
+own, so this array holds what version 3.1 adds about assets.
+
+Each object *MUST* have a `type` field and a `name` field, and describes the asset in `assets` whose `type` and
+`name` are exactly those (the first, if there are several). An object that matches no asset is ignored. Assets are
+not matched by `uri`, because applications rewrite the `uri` when they repack a card.
+
+`lang` *MUST* be a BCP 47 language tag or undefined. `variant_of` *MUST* be a string or undefined.
+
+An asset of type `icon` or `background` whose object has both `lang` and `variant_of` is a *language variant*:
+for users of that language it replaces the asset of the same `type` whose `name` is equal to `variant_of`. It has a
+`name` of its own, such as `main-en`, which no other asset of its `type` has. Version 3.1 has language variants for
+these two types only: on an asset of any other type, `variant_of` is ignored.
+
+The application first chooses an asset as this specification says elsewhere (for example the `main` icon), and
+then looks for a variant of it. With N the name of the chosen asset, it runs the lookup of
+[Selecting a locale](#selecting-a-locale), starting from the chat locale inside a chat and from the wanted tag
+anywhere else: at each step, a variant of N whose `lang` is equal to the tag is used, and otherwise, if `language`
+is equal to the tag, N itself is used. If nothing matches, or the chat has no locale, N is used; the fallback of
+that section to a locale with the same primary language subtag is not used for an asset. A variant is not
+chosen in its own right: wherever this specification chooses an asset by its name or as the first of its type,
+language variants are passed over. A `variant_of` that names no asset, and a variant of a variant, are ignored.
+
+`lang` without `variant_of`, on an asset of any type, states the language of the asset's content and changes
+nothing else.
+
+An application of version 3.0 sees a variant as one more asset of its type. Where this specification counts the
+assets of a type (a `main` icon is required when there is more than one icon), language variants are not counted.
+A card that is to satisfy an application of version 3.0 as well names such an asset `main` when it has a variant.
 
 ## Lorebook Fields
 
@@ -370,6 +580,31 @@ The value of this field *MUST* be a string or undefined. this field *MAY* be use
 > AgnAI Compatibility
 
 The value of this field *MUST* be a number or undefined. if this field is present, the application *MAY* remove the lowest priority lorebook fields first if the lorebook fields reaches `token_budget` limit. if this field is undefined, applications *MAY* follow the `insertion_order` field instead.
+
+### `extensions.localizations` of an entry
+
+**(3.1)** The `extensions` of an entry can hold its translations. The value of this key *MUST* be an object or
+undefined. Each key *MUST* be a BCP 47 language tag, and each value an object with any of `keys`, `secondary_keys`,
+`content`, `name` and `comment`, which are the translations of the entry's fields of the same name.
+
+The locale of an entry is found by the lookup of [Selecting a locale](#selecting-a-locale), starting from the chat
+locale and run over the keys of this object, as for an asset. At each step, a key equal to the tag gives that
+translation; otherwise, if `language` is equal to the tag, the entry's own fields are used. The first match ends
+the search. When nothing matches, or the chat has no locale, the entry's own fields are used; the fallback of that
+section to a locale with the same primary language subtag is not used for an entry.
+
+For example, with the chat locale `en-GB` and a key `en`, the `en` translation is used. With `language` `zh-Hant`,
+the chat locale `zh-Hant-TW` and only a key `zh`, the entry's own fields are used, since the lookup stops at
+`zh-Hant`.
+
+- When the application checks for a match, it uses the entry's `keys` together with the `keys` of that locale,
+  and likewise for `secondary_keys`.
+- The text that is added to the prompt is the `content` of that locale, or the entry's `content` when it has none.
+- Decorators are written in the entry's `content` only, and apply in every locale. A translated `content`
+  *MUST NOT* have decorators; an application that finds one there does not act on it and leaves it out of the
+  prompt.
+
+The `name` and `description` of the lorebook itself are not translated in version 3.1.
 
 ## Decorators
 
@@ -567,9 +802,17 @@ Curly braced syntaxes, shortly CBS, also known as macros, are used to replace th
 
 applications are allowed to use these CBS everywhere they want, but the applications *MUST* replace the CBS with the value that are defined in the spec. applications *MAY* add more CBS. however, the added CBS *MUST* start with `{{` and end with `}}` to prevent conflicts with plain text and HTML. the CBS *SHOULD* be detected case insensitive.
 
+**(3.1)** The *MUST* above covers the CBS of version 3.0. A CBS that version 3.1 adds states its own requirement
+in its section, and `{{lang}}` is required of an application that supports `extensions.localizations`.
+
 ### `{{char}}`
 
 This CBS *MUST* be replaced with the value of the `nickname` field in the CharacterCard object. however, if the `nickname` field is undefined or empty string, the value of this CBS *MUST* be replaced with the value of the `name` field in the CharacterCard object.
+
+**(3.1)** In an application that supports `extensions.localizations`, when the chat has a locale, this CBS *MUST* be
+replaced with the `nickname` of that locale, or its `name` when it has no `nickname`, and with the values above when
+the locale has neither. `<char>` and `<bot>`, which the `nickname` section replaces in the same way as this CBS,
+follow the same rule.
 
 ### `{{user}}`
 
@@ -603,3 +846,21 @@ This CBS *MUST* be replaced with an empty string when sending as a prompt. and *
 ### `{{reverse:A}}`
 
 This CBS *MUST* be replaced with the reversed version of the value of A. for example, `{{reverse:Hello}}` *MUST* be replaced with `olleH`.
+
+### `{{lang}}`
+
+**(3.1)** This CBS *MUST* be replaced with the chat locale, for example `en-GB`, so that a prompt can say "Reply
+in {{lang}}." When the chat has no locale, it is replaced with an empty string.
+
+### `::` as a separator
+
+**(3.1)** The CBS above are written with one colon after the name, but applications also accept two, and the
+example for `{{pick:A,B,C...}}` uses two. (RisuAI and SillyTavern's current engine accept two after any name;
+SillyTavern's earlier engine does so only for `{{random}}` and `{{pick}}`.)
+
+- An application *SHOULD* accept `::` directly after the name of a CBS wherever this specification writes `:`.
+  `{{reverse::Hello}}` is the same as `{{reverse:Hello}}`.
+- For `{{random:A,B,C...}}` and `{{pick:A,B,C...}}` written with `::` after the name, an application *SHOULD* also
+  accept `::` between the values, when the list holds `::`; otherwise the values are separated by commas as defined
+  above. `{{random:a,b}}`, `{{random::a,b}}` and `{{random::a::b}}` are the same.
+- A card *SHOULD* use one colon and commas for the CBS above, which every application accepts.
